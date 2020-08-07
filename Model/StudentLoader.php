@@ -31,4 +31,9 @@ class StudentLoader extends Loader
             $this->students[$student['id']] = new Student($student['firstName'], $student['lastName'], $student['email'], $student['address']);
         }
     }
+
+    public function getStudents(): array
+    {
+        return $this->students;
+    }
 }

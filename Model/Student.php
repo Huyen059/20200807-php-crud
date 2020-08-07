@@ -13,10 +13,10 @@ class Student
 
     public function __construct(string $firstName, string $lastName, string $email, string $address)
     {
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->email = $email;
-        $this->address = $address;
+        $this->firstName = ucwords($firstName);
+        $this->lastName = ucwords($lastName);
+        $this->email = strtolower($email);
+        $this->address = ucwords($address);
     }
 
     public function getId(): int
@@ -44,7 +44,7 @@ class Student
         return $this->address;
     }
 
-    public function getClass(): LearningClass
+    public function getClass(): ?LearningClass
     {
         return $this->class;
     }
