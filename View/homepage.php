@@ -7,8 +7,13 @@ error_reporting(E_ALL);
 
 <?php require 'includes/header.php'; ?>
 
-<section>
-    <h1>Homepage</h1>
+
+
+<section class="container">
+    <h1 class="text-center">Welcome to Becode</h1>
+
+
+
 </section>
 
 <?php require 'includes/footer.php'; ?>
