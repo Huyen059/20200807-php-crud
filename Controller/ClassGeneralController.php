@@ -17,10 +17,13 @@ class ClassGeneralController
     public function render()
     {
         $pdo = Connection::openConnection();
+        // If the delete button is clicked, remove the row in database before re-fetching the classes
         if(isset($_POST['delete'])){
             $id = (int)$_POST['delete'];
             LearningClass::delete($pdo, $id);
         }
+        // Get the teacherLoader because constructor of ClassLoader needs it
+        // Todo: need to separate them somehow
         try {
             $teacherLoader = new TeacherLoader($pdo);
             $teachers = $teacherLoader->getTeachers();

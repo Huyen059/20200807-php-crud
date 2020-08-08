@@ -17,6 +17,7 @@ class UpdateClassController
     public function render()
     {
         $pdo = Connection::openConnection();
+        // Get the list of all teachers, so that they can be displayed in the dropdown of the form
         try {
             $teacherLoader = new TeacherLoader($pdo);
             $teachers = $teacherLoader->getTeachers();
@@ -25,17 +26,8 @@ class UpdateClassController
             $errorMessage = $e->getMessage();
         }
 
-        if(isset($_POST['id'])){
-            $className = htmlspecialchars(trim($_POST['className']));
-            $address = htmlspecialchars(trim($_POST['address']));
-            $teacherId = (int)$_POST['teacherId'];
-            $class = new LearningClass($className, $address);
-            if($teacherId !== 0) {
-                $class->setTeacher($teacherLoader, $teacherId);
-            }
-            $class->setId((int)$_POST['id']);
-            $class->save($pdo);
-        } else {
+        // When the form is not submitted, we need to displayed the info currently stored in database
+        if(!isset($_POST['id'])){
             try {
                 $loader = new ClassLoader($pdo, $teacherLoader);
                 $classes = $loader->getClasses();
@@ -49,10 +41,22 @@ class UpdateClassController
             {
                 $errorMessage = $e->getMessage();
             }
+        } else {
+            // After the form is submitted, we won't display the form anymore, just update info in database
+            $className = htmlspecialchars(trim($_POST['className']));
+            $address = htmlspecialchars(trim($_POST['address']));
+            $teacherId = (int)$_POST['teacherId'];
+            $class = new LearningClass($className, $address);
+            if($teacherId !== 0) {
+                $class->setTeacher($teacherLoader, $teacherId);
+            }
+            $class->setId((int)$_POST['id']);
+            $class->save($pdo);
         }
 
         $title = "Update data";
         $action = 'update';
+        $firstOption = (empty($teachers)) ? 'No teacher available' : 'Choose a teacher';
         require 'View/add_class.php';
     }
 }

@@ -15,13 +15,17 @@ class AddClassController
     public function render()
     {
         $pdo = Connection::openConnection();
+        // Get the list of all teachers, so that they can be displayed in the dropdown of the form
         try {
             $teacherLoader = new TeacherLoader($pdo);
+            $teachers = $teacherLoader->getTeachers();
         }
         catch (TeacherLoaderException $e) {
+            $teachers = [];
             $errorMessage = $e->getMessage();
         }
 
+        // When the form is submitted
         if(isset($_POST['id'])){
             $className = htmlspecialchars(trim($_POST['className']));
             $address = htmlspecialchars(trim($_POST['address']));
@@ -35,6 +39,7 @@ class AddClassController
 
         $title = "Add a new class";
         $action = 'add';
+        $firstOption = (empty($teachers)) ? 'No teacher available' : 'Choose a teacher';
         require 'View/add_class.php';
     }
 }

@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
-use Model\TeacherLoader;ini_set('display_errors', "1");
+
+use Model\Teacher;
+ini_set('display_errors', "1");
 ini_set('display_startup_errors', "1");
 error_reporting(E_ALL);
 ?>
@@ -32,10 +34,10 @@ error_reporting(E_ALL);
             <div class="form-group">
                 <label for="teacher">Teacher</label>
                 <select class="form-control" id="teacher" name="teacherId">
-                    <option selected value="0">No assigned teacher</option>
+                    <option selected value="0"><?= $firstOption ?></option>
                     <?php
                     /**
-                    * @var TeacherLoader $teacherLoader
+                    * @var Teacher[] $teachers
                     */
                     if(!empty($teachers)):
                     foreach ($teachers as $teacher):
