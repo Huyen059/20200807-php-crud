@@ -49,9 +49,12 @@ error_reporting(E_ALL);
                         }
                         ?>
                     </td>
-                    <td class="align-middle"><?php if ($class->getName() !== null) {
-                            //Todo: get students and put them here in a list
-                            echo "<a href='#'>{$class->getName()}</a>";
+                    <td class="align-middle"><?php if ($class->getStudents()) {
+                        echo "<ul>";
+                        foreach ($class->getStudents() as $studentId => $studentFullName) {
+                            echo "<li><a href='?page=student&id={$studentId}'>{$studentFullName}</a></li>";
+                        }
+                        echo "</ul>";
                         } else {
                             echo "N/A";
                         }

@@ -10,10 +10,7 @@ class LearningClass
     private int $id = 0;
     private string $name, $address;
     private ?Teacher $teacher = null;
-    /**
-     * @var Student[]
-     */
-    private array $students;
+    private array $students = [];
 
     public function __construct(string $name, string $address)
     {
@@ -46,20 +43,24 @@ class LearningClass
         return $this->teacher;
     }
 
-    /**
-     * @return Student[]
-     */
     public function getStudents(): array
     {
         return $this->students;
     }
 
-    /**
-     * @param Student[] $students
-     */
-    public function setStudents(array $students): void
+    public function setStudents(\PDO $pdo): void
     {
-        $this->students = $students;
+        $handle = $pdo->prepare('SELECT 
+            student.id as studentId, student.firstName as studentFirstName, student.lastName as studentLastName
+            FROM class
+            LEFT JOIN student ON class.id = student.class_id
+            WHERE class.id = :id');
+        $handle->bindValue('id', $this->getId());
+        $handle->execute();
+        $students = $handle->fetchAll();
+        foreach ($students as $student) {
+            $this->students[$student['studentId']] = $student['studentFirstName'] . " " . $student['studentLastName'];
+        }
     }
 
 
