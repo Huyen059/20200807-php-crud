@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 namespace Controller;
+use Model\ClassLoader;
+use Model\ClassLoaderException;
 use Model\Connection;
 use Model\Student;
 
@@ -13,6 +15,17 @@ class AddStudentController
     public function render()
     {
         $pdo = Connection::openConnection();
+
+        // Get all classes to display in dropdown
+        try {
+            $classLoader = new ClassLoader($pdo);
+            $classes = $classLoader->getClasses();
+        }
+        catch (ClassLoaderException $e) {
+            $classes = [];
+            $errorMessage = $e->getMessage();
+        }
+        // When the form is submitted
         if(isset($_POST['id'])){
             $firstName = htmlspecialchars(trim($_POST['firstName']));
             $lastName = htmlspecialchars(trim($_POST['lastName']));
@@ -28,6 +41,7 @@ class AddStudentController
 
         $title = "Add a new student";
         $action = 'add';
+        $firstOption = (empty($classes)) ? 'No class available' : 'Choose a class';
         require 'View/add_student.php';
     }
 }

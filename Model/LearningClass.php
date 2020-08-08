@@ -66,8 +66,7 @@ class LearningClass
     public function setTeacher(\PDO $pdo, int $teacherId): void
     {
         $teacherLoader = new TeacherLoader($pdo);
-        $teacher = $teacherLoader->getTeachers()[$teacherId];
-        $this->teacher = $teacher;
+        $this->teacher = $teacherLoader->getTeachers()[$teacherId];
     }
 
     public function insert(\PDO $pdo)

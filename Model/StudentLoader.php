@@ -26,6 +26,9 @@ class StudentLoader
         foreach ($students as $student) {
             $newStudent = new Student($student['firstName'], $student['lastName'], $student['email'], $student['address']);
             $newStudent->setId((int)$student['id']);
+            if($student['class_id']) {
+                $newStudent->setClass($pdo, (int)$student['class_id']);
+            }
             $this->students[$student['id']] = $newStudent;
         }
     }

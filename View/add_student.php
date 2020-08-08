@@ -1,5 +1,8 @@
 <?php
 declare(strict_types=1);
+
+use Model\LearningClass;
+
 ini_set('display_errors', "1");
 ini_set('display_startup_errors', "1");
 error_reporting(E_ALL);
@@ -40,12 +43,12 @@ error_reporting(E_ALL);
         <div class="form-group">
             <label for="class">Class</label>
             <select class="form-control" id="class" name="classId">
-                <option selected value="0">No class chosen</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+                <option selected value="0"><?= $firstOption ?></option>
+                <?php /** @var LearningClass[] $classes */
+                foreach ($classes as $class):
+                ?>
+                <option value="<?= $class->getId()?>"><?= $class->getName() ?></option>
+                <?php endforeach;?>
             </select>
         </div>
         <button type="submit" class="btn btn-primary w-100">Submit</button>

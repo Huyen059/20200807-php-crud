@@ -14,10 +14,11 @@ class Student extends Person
         return $this->class;
     }
 
-    public function setClass(int $classId): void
+    public function setClass(\PDO $pdo, int $classId): void
     {
-        // Todo: link class here
-        $this->class = new LearningClass('', '', 1);
+        $classLoader = new ClassLoader($pdo);
+        $classes = $classLoader->getClasses();
+        $this->class = $classes[$classId];
     }
 
     public function insert(\PDO $pdo)

@@ -46,8 +46,8 @@ error_reporting(E_ALL);
                         <td class="align-middle"><?= $student->getLastName() ?></td>
                         <td class="align-middle"><?= $student->getEmail() ?></td>
                         <td class="align-middle"><?= $student->getAddress() ?></td>
-                        <td class="align-middle"><?php if ($student->getClass() !== null) {
-                                echo "<a href='#'>{$student->getClass()->getName()}</a>";
+                        <td class="align-middle"><?php if ($student->getClass()) {
+                                echo "<a href='?page=class&id={$student->getClass()->getId()}'>{$student->getClass()->getName()}</a>";
                             } else {
                                 echo "N/A";
                             }
