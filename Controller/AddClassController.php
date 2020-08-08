@@ -23,6 +23,8 @@ class AddClassController
             }
             $class->save();
         }
+        $title = "Add a new class";
+        $action = 'add';
         require 'View/add_class.php';
     }
 }

@@ -17,17 +17,17 @@ error_reporting(E_ALL);
         </div>
 
     <?php else: ?>
-        <h2 class="text-center">Add a new class</h2>
+        <h2 class="text-center"><?= $title ?></h2>
         <form method="post">
-            <input type="hidden" name="action" value="add">
-            <input type="hidden" name="id" value="">
+            <input type="hidden" name="action" value="<?= $action ?>">
+            <input type="hidden" name="id" value="<?= $id ?>">
             <div class="form-group">
                 <label for="className">Class Name</label>
-                <input name="className" type="text" class="form-control" id="className" aria-describedby="className" placeholder="Class name" required>
+                <input name="className" value="<?= $className ?>" type="text" class="form-control" id="className" aria-describedby="className" placeholder="Class name" required>
             </div>
             <div class="form-group">
                 <label for="address">Address</label>
-                <input name="address" type="text" class="form-control" id="address" aria-describedby="address" placeholder="Address" required>
+                <input name="address" value="<?= $address ?>" type="text" class="form-control" id="address" aria-describedby="address" placeholder="Address" required>
             </div>
             <div class="form-group">
                 <label for="teacher">Teacher</label>

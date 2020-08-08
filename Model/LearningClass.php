@@ -71,7 +71,7 @@ class LearningClass
         $this->teacher = new Teacher('', '', '', '');
     }
 
-    public function save(): void
+    public function insert()
     {
         $pdo = $this->openConnection();
         if($this->getTeacher() !== null) {
@@ -86,5 +86,32 @@ class LearningClass
         }
         $handle->execute();
         $this->id = (int)$pdo->lastInsertId();
+    }
+
+    public function update()
+    {
+        $pdo = $this->openConnection();
+        if($this->getTeacher() !== null) {
+            $handle = $pdo->prepare('UPDATE class SET name = :name, address = :address, teacher_id = :teacher WHERE id = :id');
+        } else {
+            $handle = $pdo->prepare('UPDATE class SET name = :name, address = :address WHERE id = :id');
+        }
+        $handle->bindValue('name', $this->getName());
+        $handle->bindValue('address', $this->getAddress());
+        $handle->bindValue('id', $this->getId());
+        if($this->getTeacher() !== null) {
+            $handle->bindValue('teacher', $this->getTeacher()->getId());
+        }
+        $handle->execute();
+    }
+
+    public function save(): void
+    {
+        if(empty($this->getId())){
+            $this->insert();
+            return;
+        }
+
+        $this->update();
     }
 }
