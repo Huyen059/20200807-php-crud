@@ -42,6 +42,13 @@ class Teacher extends Person
         $handle->execute();
     }
 
+    public static function delete(\PDO $pdo, int $id)
+    {
+        $handle = $pdo->prepare('DELETE FROM teacher WHERE id = :id');
+        $handle->bindValue('id', $id);
+        $handle->execute();
+    }
+
     public function save(\PDO $pdo)
     {
         if(empty($this->getId())){

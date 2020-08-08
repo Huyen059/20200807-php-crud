@@ -101,6 +101,13 @@ class LearningClass
         $handle->execute();
     }
 
+    public static function delete(\PDO $pdo, int $id)
+    {
+        $handle = $pdo->prepare('DELETE FROM class WHERE id = :id');
+        $handle->bindValue('id', $id);
+        $handle->execute();
+    }
+
     public function save(\PDO $pdo): void
     {
         if(empty($this->getId())){

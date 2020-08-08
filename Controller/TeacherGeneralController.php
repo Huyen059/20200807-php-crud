@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace Controller;
 use Model\Connection;
+use Model\Teacher;
 use Model\TeacherLoader;
 use Model\TeacherLoaderException;
 
@@ -14,6 +15,11 @@ class TeacherGeneralController
     public function render()
     {
         $pdo = Connection::openConnection();
+        if(isset($_POST['delete'])){
+            $id = (int)$_POST['delete'];
+            Teacher::delete($pdo, $id);
+        }
+
         try {
             $loader = new TeacherLoader($pdo);
         }

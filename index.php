@@ -34,13 +34,13 @@ if(isset($_GET['page'])) {
             }
             if(isset($_POST['action'])) {
                 switch ($_POST['action']){
+                    case 'delete':
+                        break;
                     case 'add':
                         $controller = new AddStudentController();
                         break;
                     case 'update':
                         $controller = new UpdateStudentController();
-                        break;
-                    case 'delete':
                         break;
                 }
             }
@@ -52,15 +52,14 @@ if(isset($_GET['page'])) {
             }
             if(isset($_POST['action'])) {
                 switch ($_POST['action']){
+                    case 'delete':
+                        break;
                     case 'add':
                         $controller = new AddTeacherController();
                         break;
                     case 'update':
                         $controller = new UpdateTeacherController();
                         break;
-//                    case 'delete':
-//                        $controller = 'delete';
-//                        break;
                 }
             }
             break;
@@ -71,15 +70,14 @@ if(isset($_GET['page'])) {
             }
             if(isset($_POST['action'])) {
                 switch ($_POST['action']){
+                    case 'delete':
+                        break;
                     case 'add':
                         $controller = new AddClassController();
                         break;
                     case 'update':
                         $controller = new UpdateClassController();
                         break;
-//                    case 'delete':
-//                        $controller = 'delete';
-//                        break;
                 }
             }
             break;

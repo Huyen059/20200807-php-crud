@@ -4,6 +4,7 @@ namespace Controller;
 use Model\ClassLoader;
 use Model\ClassLoaderException;
 use Model\Connection;
+use Model\LearningClass;
 
 ini_set('display_errors', "1");
 ini_set('display_startup_errors', "1");
@@ -14,6 +15,10 @@ class ClassGeneralController
     public function render()
     {
         $pdo = Connection::openConnection();
+        if(isset($_POST['delete'])){
+            $id = (int)$_POST['delete'];
+            LearningClass::delete($pdo, $id);
+        }
         try {
             $loader = new ClassLoader($pdo);
         }
