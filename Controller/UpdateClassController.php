@@ -5,6 +5,8 @@ use Model\ClassLoader;
 use Model\ClassLoaderException;
 use Model\Connection;
 use Model\LearningClass;
+use Model\TeacherLoader;
+use Model\TeacherLoaderException;
 
 ini_set('display_errors', "1");
 ini_set('display_startup_errors', "1");
@@ -15,19 +17,27 @@ class UpdateClassController
     public function render()
     {
         $pdo = Connection::openConnection();
+        try {
+            $teacherLoader = new TeacherLoader($pdo);
+            $teachers = $teacherLoader->getTeachers();
+        } catch (TeacherLoaderException $e) {
+            $teachers = [];
+            $errorMessage = $e->getMessage();
+        }
+
         if(isset($_POST['id'])){
             $className = htmlspecialchars(trim($_POST['className']));
             $address = htmlspecialchars(trim($_POST['address']));
             $teacherId = (int)$_POST['teacherId'];
             $class = new LearningClass($className, $address);
             if($teacherId !== 0) {
-                $class->setTeacher($teacherId);
+                $class->setTeacher($teacherLoader, $teacherId);
             }
             $class->setId((int)$_POST['id']);
             $class->save($pdo);
         } else {
             try {
-                $loader = new ClassLoader($pdo);
+                $loader = new ClassLoader($pdo, $teacherLoader);
                 $classes = $loader->getClasses();
                 $classId = (int)$_POST['update'];
                 $class = $classes[$classId];

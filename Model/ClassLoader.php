@@ -12,7 +12,7 @@ class ClassLoader
      */
     private array $classes = [];
 
-    public function __construct(\PDO $pdo)
+    public function __construct(\PDO $pdo, TeacherLoader $teacherLoader)
     {
         $handle = $pdo->prepare('SELECT * FROM class');
         $handle->execute();
@@ -26,7 +26,7 @@ class ClassLoader
             $newClass = new LearningClass($class['name'], $class['address']);
             $newClass->setId((int)$class['id']);
             if($class['teacher_id']) {
-                $newClass->setTeacher(new TeacherLoader($pdo), (int)$class['teacher_id']);
+                $newClass->setTeacher($teacherLoader, (int)$class['teacher_id']);
             }
             $this->classes[$class['id']] = $newClass;
         }

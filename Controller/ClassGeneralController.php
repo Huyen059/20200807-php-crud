@@ -6,6 +6,7 @@ use Model\ClassLoaderException;
 use Model\Connection;
 use Model\LearningClass;
 use Model\TeacherLoader;
+use Model\TeacherLoaderException;
 
 ini_set('display_errors', "1");
 ini_set('display_startup_errors', "1");
@@ -21,10 +22,15 @@ class ClassGeneralController
             LearningClass::delete($pdo, $id);
         }
         try {
-            $loader = new ClassLoader($pdo);
             $teacherLoader = new TeacherLoader($pdo);
+            $teachers = $teacherLoader->getTeachers();
+            $loader = new ClassLoader($pdo, $teacherLoader);
         }
         catch (ClassLoaderException $e) {
+            $errorMessage = $e->getMessage();
+        }
+        catch (TeacherLoaderException $e) {
+            $teachers = [];
             $errorMessage = $e->getMessage();
         }
 

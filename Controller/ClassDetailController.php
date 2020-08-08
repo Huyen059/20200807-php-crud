@@ -4,6 +4,8 @@ namespace Controller;
 use Model\ClassLoader;
 use Model\ClassLoaderException;
 use Model\Connection;
+use Model\TeacherLoader;
+use Model\TeacherLoaderException;
 
 ini_set('display_errors', "1");
 ini_set('display_startup_errors', "1");
@@ -15,10 +17,14 @@ class ClassDetailController
     {
         $pdo = Connection::openConnection();
         try {
-            $loader = new ClassLoader($pdo);
+            $teacherLoader = new TeacherLoader($pdo);
+            $loader = new ClassLoader($pdo, $teacherLoader);
             $class = $loader->getClasses()[(int)$_GET['id']];
         }
         catch (ClassLoaderException $e) {
+            $errorMessage = $e->getMessage();
+        }
+        catch (TeacherLoaderException $e) {
             $errorMessage = $e->getMessage();
         }
 

@@ -37,10 +37,12 @@ error_reporting(E_ALL);
                     /**
                     * @var TeacherLoader $teacherLoader
                     */
-                    foreach ($teacherLoader->getTeachers() as $teacher):
+                    if(!empty($teachers)):
+                    foreach ($teachers as $teacher):
                     ?>
                     <option value="<?= $teacher->getId() ?>"><?= $teacher->getFullName() ?></option>
                     <?php endforeach; ?>
+                    <?php endif; ?>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary w-100">Submit</button>
