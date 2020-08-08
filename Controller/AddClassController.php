@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace Controller;
 use Model\ClassLoader;
 use Model\ClassLoaderException;
+use Model\Connection;
 use Model\LearningClass;
 
 ini_set('display_errors', "1");
@@ -13,6 +14,7 @@ class AddClassController
 {
     public function render()
     {
+        $pdo = Connection::openConnection();
         if(isset($_POST['id'])){
             $className = htmlspecialchars(trim($_POST['className']));
             $address = htmlspecialchars(trim($_POST['address']));
@@ -21,7 +23,7 @@ class AddClassController
             if($teacherId !== 0) {
                 $class->setTeacher($teacherId);
             }
-            $class->save();
+            $class->save($pdo);
         }
         $title = "Add a new class";
         $action = 'add';

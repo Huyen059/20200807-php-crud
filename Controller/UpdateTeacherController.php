@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace Controller;
+use Model\Connection;
 use Model\Teacher;
 use Model\TeacherLoader;
 use Model\TeacherLoaderException;
@@ -13,6 +14,7 @@ class UpdateTeacherController
 {
     public function render()
     {
+        $pdo = Connection::openConnection();
         if(isset($_POST['id'])){
             $firstName = htmlspecialchars(trim($_POST['firstName']));
             $lastName = htmlspecialchars(trim($_POST['lastName']));
@@ -20,10 +22,10 @@ class UpdateTeacherController
             $address = htmlspecialchars(trim($_POST['address']));
             $teacher = new Teacher($firstName, $lastName, $email, $address);
             $teacher->setId((int)$_POST['id']);
-            $teacher->save();
+            $teacher->save($pdo);
         } else {
             try {
-                $loader = new TeacherLoader();
+                $loader = new TeacherLoader($pdo);
                 $teachers = $loader->getTeachers();
                 $teacherId = (int)$_POST['update'];
                 $teacher = $teachers[$teacherId];

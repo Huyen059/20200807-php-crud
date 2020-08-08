@@ -7,19 +7,13 @@ error_reporting(E_ALL);
 
 class ClassLoader
 {
-    use Connection;
-
     /**
      * @var LearningClass[]
      */
     private array $classes = [];
 
-    public function __construct()
+    public function __construct(\PDO $pdo)
     {
-        /**
-         * @var \PDO $pdo
-         */
-        $pdo = $this->openConnection();
         $handle = $pdo->prepare('SELECT * FROM class');
         $handle->execute();
         $classes = $handle->fetchAll();

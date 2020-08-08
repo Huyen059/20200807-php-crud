@@ -7,7 +7,6 @@ error_reporting(E_ALL);
 
 class Teacher extends Person
 {
-    use Connection;
     private ?LearningClass $class = null;
 
     public function getClass(): ?LearningClass
@@ -21,9 +20,8 @@ class Teacher extends Person
         $this->class = $class;
     }
 
-    public function insert()
+    public function insert(\PDO $pdo)
     {
-        $pdo = $this->openConnection();
         $handle = $pdo->prepare('INSERT INTO teacher (firstName, lastName, email, address) VALUES (:firstName, :lastName, :email, :address)');
         $handle->bindValue('firstName', $this->getFirstName());
         $handle->bindValue('lastName', $this->getLastName());
@@ -33,9 +31,8 @@ class Teacher extends Person
         $this->id = (int)$pdo->lastInsertId();
     }
 
-    public function update()
+    public function update(\PDO $pdo)
     {
-        $pdo = $this->openConnection();
         $handle = $pdo->prepare('UPDATE teacher SET firstName = :firstName, lastName = :lastName, email = :email, address = :address WHERE id = :id');
         $handle->bindValue('firstName', $this->getFirstName());
         $handle->bindValue('lastName', $this->getLastName());
@@ -45,13 +42,13 @@ class Teacher extends Person
         $handle->execute();
     }
 
-    public function save()
+    public function save(\PDO $pdo)
     {
         if(empty($this->getId())){
-            $this->insert();
+            $this->insert($pdo);
             return;
         }
 
-        $this->update();
+        $this->update($pdo);
     }
 }

@@ -8,19 +8,13 @@ error_reporting(E_ALL);
 
 class StudentLoader
 {
-    use Connection;
-
     /**
      * @var Student[]
      */
     private array $students = [];
 
-    public function __construct()
+    public function __construct(\PDO $pdo)
     {
-        /**
-         * @var \PDO $pdo
-         */
-        $pdo = $this->openConnection();
         $handle = $pdo->prepare('SELECT * FROM student');
         $handle->execute();
         $students = $handle->fetchAll();

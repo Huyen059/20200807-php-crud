@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace Controller;
+use Model\Connection;
 use Model\Student;
 
 ini_set('display_errors', "1");
@@ -11,6 +12,7 @@ class AddStudentController
 {
     public function render()
     {
+        $pdo = Connection::openConnection();
         if(isset($_POST['id'])){
             $firstName = htmlspecialchars(trim($_POST['firstName']));
             $lastName = htmlspecialchars(trim($_POST['lastName']));
@@ -21,7 +23,7 @@ class AddStudentController
             if($classId !== 0) {
                 $student->setClass($classId);
             }
-            $student->save();
+            $student->save($pdo);
         }
 
         $title = "Add a new student";

@@ -7,8 +7,6 @@ error_reporting(E_ALL);
 
 class LearningClass
 {
-    use Connection;
-
     private int $id;
     private string $name, $address;
     private ?Teacher $teacher = null;
@@ -71,9 +69,8 @@ class LearningClass
         $this->teacher = new Teacher('', '', '', '');
     }
 
-    public function insert()
+    public function insert(\PDO $pdo)
     {
-        $pdo = $this->openConnection();
         if($this->getTeacher() !== null) {
             $handle = $pdo->prepare('INSERT INTO class (name, address, teacher_id) VALUES (:name, :address, :teacher)');
         } else {
@@ -88,9 +85,8 @@ class LearningClass
         $this->id = (int)$pdo->lastInsertId();
     }
 
-    public function update()
+    public function update(\PDO $pdo)
     {
-        $pdo = $this->openConnection();
         if($this->getTeacher() !== null) {
             $handle = $pdo->prepare('UPDATE class SET name = :name, address = :address, teacher_id = :teacher WHERE id = :id');
         } else {
@@ -105,13 +101,13 @@ class LearningClass
         $handle->execute();
     }
 
-    public function save(): void
+    public function save(\PDO $pdo): void
     {
         if(empty($this->getId())){
-            $this->insert();
+            $this->insert($pdo);
             return;
         }
 
-        $this->update();
+        $this->update($pdo);
     }
 }

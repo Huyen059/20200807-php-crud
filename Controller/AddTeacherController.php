@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace Controller;
+use Model\Connection;
 use Model\Teacher;
 
 ini_set('display_errors', "1");
@@ -11,14 +12,14 @@ class AddTeacherController
 {
     public function render()
     {
-
+        $pdo = Connection::openConnection();
         if(isset($_POST['id'])){
             $firstName = htmlspecialchars(trim($_POST['firstName']));
             $lastName = htmlspecialchars(trim($_POST['lastName']));
             $email = htmlspecialchars(trim($_POST['email']));
             $address = htmlspecialchars(trim($_POST['address']));
             $teacher = new Teacher($firstName, $lastName, $email, $address);
-            $teacher->save();
+            $teacher->save($pdo);
         }
 
         $title = "Add a new teacher";

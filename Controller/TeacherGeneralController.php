@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace Controller;
+use Model\Connection;
 use Model\TeacherLoader;
 use Model\TeacherLoaderException;
 
@@ -12,8 +13,9 @@ class TeacherGeneralController
 {
     public function render()
     {
+        $pdo = Connection::openConnection();
         try {
-            $loader = new TeacherLoader();
+            $loader = new TeacherLoader($pdo);
         }
         catch (TeacherLoaderException $e) {
             $errorMessage = $e->getMessage();

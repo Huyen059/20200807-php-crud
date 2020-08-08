@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace Controller;
+use Model\Connection;
 use Model\StudentLoader;
 use Model\StudentLoaderException;
 
@@ -12,8 +13,9 @@ class StudentDetailController
 {
     public function render()
     {
+        $pdo = Connection::openConnection();
         try {
-            $loader = new StudentLoader();
+            $loader = new StudentLoader($pdo);
             $student = $loader->getStudents()[(int)$_GET['id']];
         }
         catch (StudentLoaderException $e) {
