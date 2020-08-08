@@ -12,7 +12,6 @@ class StudentGeneralController
 {
     public function render()
     {
-        //Todo: fetch all students from database and display in the view
         try {
             $loader = new StudentLoader();
         }

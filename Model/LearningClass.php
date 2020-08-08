@@ -5,7 +5,7 @@ ini_set('display_errors', "1");
 ini_set('display_startup_errors', "1");
 error_reporting(E_ALL);
 
-class LearningClass
+class LearningClass extends Loader
 {
     private int $id;
     private string $name, $address;
@@ -13,13 +13,18 @@ class LearningClass
 
     public function __construct(string $name, string $address)
     {
-        $this->name = $name;
-        $this->address = $address;
+        $this->name = ucwords($name);
+        $this->address = ucwords($address);
     }
 
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 
     public function getName(): string
@@ -32,7 +37,7 @@ class LearningClass
         return $this->address;
     }
 
-    public function getTeacher(): Teacher
+    public function getTeacher(): ?Teacher
     {
         return $this->teacher;
     }
@@ -43,4 +48,14 @@ class LearningClass
         $this->teacher = new Teacher('', '', '', '');
     }
 
+    public function save(): void
+    {
+        //Todo: get the values from $_POST, save to database
+        $pdo = $this->openConnection();
+        $handle = $pdo->prepare('INSERT INTO class (name, address) VALUES (:name, :address)');
+        $handle->bindValue('name', $this->getName());
+        $handle->bindValue('address', $this->getAddress());
+        $handle->execute();
+        $this->id = (int)$pdo->lastInsertId();
+    }
 }

@@ -30,7 +30,7 @@ CREATE TABLE `class` (
   PRIMARY KEY (`id`),
   KEY `class_FK` (`teacher_id`),
   CONSTRAINT `class_FK` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -55,11 +55,11 @@ CREATE TABLE `student` (
   `lastName` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `address` varchar(100) NOT NULL,
-  `class_id` int(10) unsigned DEFAULT NULL,
+  `class_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `student_FK` (`class_id`),
   CONSTRAINT `student_FK` FOREIGN KEY (`class_id`) REFERENCES `class` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -85,7 +85,7 @@ CREATE TABLE `teacher` (
   `email` varchar(100) NOT NULL,
   `address` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -106,4 +106,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-08-07 23:25:50
+-- Dump completed on 2020-08-08 10:06:33

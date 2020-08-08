@@ -17,7 +17,7 @@ error_reporting(E_ALL);
         </div>
 
     <?php else: ?>
-        <h2>Add a new student</h2>
+        <h2 class="text-center">Add a new student</h2>
         <form method="post">
         <input type="hidden" name="action" value="add">
         <input type="hidden" name="id" value="">
