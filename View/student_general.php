@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-use Model\Student;
 use Model\StudentLoader;
 
 ini_set('display_errors', "1");
@@ -61,7 +60,7 @@ error_reporting(E_ALL);
                     }
                     ?>
                 </td>
-                <td class="align-middle"><a href="?page=teacher&id=<?php echo $student->getId(); ?>" class="btn btn-success">Details</a></td>
+                <td class="align-middle"><a href="?page=student&id=<?php echo $student->getId(); ?>" class="btn btn-success">Details</a></td>
                 <td><a href="#" class="btn btn-warning">Update</a></td>
                 <td><a href="#" class="btn btn-danger">Delete</a></td>
             </tr>
