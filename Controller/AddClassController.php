@@ -32,7 +32,7 @@ class AddClassController
             $teacherId = (int)$_POST['teacherId'];
             $class = new LearningClass($className, $address);
             if($teacherId !== 0) {
-                $class->setTeacher($teacherLoader, $teacherId);
+                $class->setTeacher($pdo, $teacherId);
             }
             $class->save($pdo);
         }

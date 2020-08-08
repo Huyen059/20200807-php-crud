@@ -18,7 +18,7 @@ class ClassDetailController
         $pdo = Connection::openConnection();
         try {
             $teacherLoader = new TeacherLoader($pdo);
-            $loader = new ClassLoader($pdo, $teacherLoader);
+            $loader = new ClassLoader($pdo);
             $class = $loader->getClasses()[(int)$_GET['id']];
         }
         catch (ClassLoaderException $e) {

@@ -27,7 +27,7 @@ class ClassGeneralController
         try {
             $teacherLoader = new TeacherLoader($pdo);
             $teachers = $teacherLoader->getTeachers();
-            $loader = new ClassLoader($pdo, $teacherLoader);
+            $loader = new ClassLoader($pdo);
         }
         catch (ClassLoaderException $e) {
             $errorMessage = $e->getMessage();

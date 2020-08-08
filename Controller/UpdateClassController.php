@@ -29,7 +29,7 @@ class UpdateClassController
         // When the form is not submitted, we need to displayed the info currently stored in database
         if(!isset($_POST['id'])){
             try {
-                $loader = new ClassLoader($pdo, $teacherLoader);
+                $loader = new ClassLoader($pdo);
                 $classes = $loader->getClasses();
                 $classId = (int)$_POST['update'];
                 $class = $classes[$classId];
@@ -48,7 +48,7 @@ class UpdateClassController
             $teacherId = (int)$_POST['teacherId'];
             $class = new LearningClass($className, $address);
             if($teacherId !== 0) {
-                $class->setTeacher($teacherLoader, $teacherId);
+                $class->setTeacher($pdo, $teacherId);
             }
             $class->setId((int)$_POST['id']);
             $class->save($pdo);
