@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use Model\Student;
 use Model\StudentLoader;
 
 ini_set('display_errors', "1");
@@ -29,10 +30,12 @@ error_reporting(E_ALL);
         <table class="table">
             <thead>
             <tr>
-<!--                <th scope="col">#</th>-->
+                <th scope="col">ID</th>
                 <th scope="col">First Name</th>
                 <th scope="col">Last Name</th>
                 <th scope="col">Class</th>
+                <th></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -43,7 +46,7 @@ error_reporting(E_ALL);
             foreach ($loader->getStudents() as $student):
             ?>
             <tr>
-<!--                <th scope="row">--><?php //echo $student->getId(); ?><!--</th>-->
+                <th scope="row"><?php echo $student->getId(); ?></th>
                 <td><?= $student->getFirstName() ?></td>
                 <td><?= $student->getLastName() ?></td>
                 <td><?php if ($student->getClass() !== null) {
@@ -51,8 +54,10 @@ error_reporting(E_ALL);
                     } else {
                         echo "N/A";
                     }
-                    ?></td>
-
+                    ?>
+                </td>
+                <td><a href="#" class="btn btn-warning">Update</a></td>
+                <td><a href="#" class="btn btn-danger">Delete</a></td>
             </tr>
             <?php endforeach; ?>
             </tbody>

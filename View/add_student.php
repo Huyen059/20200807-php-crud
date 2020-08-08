@@ -39,7 +39,8 @@ error_reporting(E_ALL);
         </div>
         <div class="form-group">
             <label for="class">Class</label>
-            <select class="form-control" id="class">
+            <select class="form-control" id="class" name="classId">
+                <option selected value="0">No class chosen</option>
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>

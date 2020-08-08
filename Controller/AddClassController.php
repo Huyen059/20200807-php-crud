@@ -16,7 +16,11 @@ class AddClassController
         if(isset($_POST['id'])){
             $className = htmlspecialchars(trim($_POST['className']));
             $address = htmlspecialchars(trim($_POST['address']));
+            $teacherId = (int)$_POST['teacherId'];
             $class = new LearningClass($className, $address);
+            if($teacherId !== 0) {
+                $class->setTeacher($teacherId);
+            }
             $class->save();
         }
         require 'View/add_class.php';

@@ -5,8 +5,10 @@ ini_set('display_errors', "1");
 ini_set('display_startup_errors', "1");
 error_reporting(E_ALL);
 
-class LearningClass extends Loader
+class LearningClass
 {
+    use Connection;
+
     private int $id;
     private string $name, $address;
     private ?Teacher $teacher = null;
@@ -50,11 +52,17 @@ class LearningClass extends Loader
 
     public function save(): void
     {
-        //Todo: get the values from $_POST, save to database
         $pdo = $this->openConnection();
-        $handle = $pdo->prepare('INSERT INTO class (name, address) VALUES (:name, :address)');
+        if($this->getTeacher() !== null) {
+            $handle = $pdo->prepare('INSERT INTO class (name, address, teacher_id) VALUES (:name, :address, :teacher)');
+        } else {
+            $handle = $pdo->prepare('INSERT INTO class (name, address) VALUES (:name, :address)');
+        }
         $handle->bindValue('name', $this->getName());
         $handle->bindValue('address', $this->getAddress());
+        if($this->getTeacher() !== null) {
+            $handle->bindValue('teacher', $this->getTeacher()->getId());
+        }
         $handle->execute();
         $this->id = (int)$pdo->lastInsertId();
     }

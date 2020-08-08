@@ -29,6 +29,17 @@ error_reporting(E_ALL);
                 <label for="address">Address</label>
                 <input name="address" type="text" class="form-control" id="address" aria-describedby="address" placeholder="Address" required>
             </div>
+            <div class="form-group">
+                <label for="teacher">Teacher</label>
+                <select class="form-control" id="teacher" name="teacherId">
+                    <option selected value="0">No assigned teacher</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </div>
             <button type="submit" class="btn btn-primary w-100">Submit</button>
         </form>
     <?php endif; ?>

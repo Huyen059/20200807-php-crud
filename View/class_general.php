@@ -10,7 +10,7 @@ error_reporting(E_ALL);
 
 <?php require 'includes/header.php'; ?>
 
-<section>
+<section class="container">
     <h1 class="text-center mb-5">Class Data</h1>
 
     <div class="mb-5">

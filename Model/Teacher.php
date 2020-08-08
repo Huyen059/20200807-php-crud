@@ -5,36 +5,31 @@ ini_set('display_errors', "1");
 ini_set('display_startup_errors', "1");
 error_reporting(E_ALL);
 
-class Teacher
+class Teacher extends Person
 {
-    private int $id;
-    private string $firstName, $lastName, $email, $address;
+    use Connection;
+    private ?LearningClass $class = null;
 
-    public function __construct(string $firstName, string $lastName, string $email, string $address)
+    public function getClass(): ?LearningClass
     {
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->email = $email;
-        $this->address = $address;
+        return $this->class;
     }
 
-    public function getFirstName(): string
+    public function setClass(LearningClass $class): void
     {
-        return $this->firstName;
+        // Todo: link class here
+        $this->class = $class;
     }
 
-    public function getLastName(): string
+    public function save()
     {
-        return $this->lastName;
-    }
-
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-
-    public function getAddress(): string
-    {
-        return $this->address;
+        $pdo = $this->openConnection();
+        $handle = $pdo->prepare('INSERT INTO teacher (firstName, lastName, email, address) VALUES (:firstName, :lastName, :email, :address)');
+        $handle->bindValue('firstName', $this->getFirstName());
+        $handle->bindValue('lastName', $this->getLastName());
+        $handle->bindValue('email', $this->getEmail());
+        $handle->bindValue('address', $this->getAddress());
+        $handle->execute();
+        $this->id = (int)$pdo->lastInsertId();
     }
 }

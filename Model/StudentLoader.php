@@ -6,8 +6,10 @@ ini_set('display_errors', "1");
 ini_set('display_startup_errors', "1");
 error_reporting(E_ALL);
 
-class StudentLoader extends Loader
+class StudentLoader
 {
+    use Connection;
+
     /**
      * @var Student[]
      */
@@ -28,7 +30,9 @@ class StudentLoader extends Loader
         }
 
         foreach ($students as $student) {
-            $this->students[$student['id']] = new Student($student['firstName'], $student['lastName'], $student['email'], $student['address']);
+            $newStudent = new Student($student['firstName'], $student['lastName'], $student['email'], $student['address']);
+            $newStudent->setId((int)$student['id']);
+            $this->students[$student['id']] = $newStudent;
         }
     }
 

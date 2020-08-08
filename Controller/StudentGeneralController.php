@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace Controller;
+use Model\Student;
 use Model\StudentLoader;
 use Model\StudentLoaderException;
 

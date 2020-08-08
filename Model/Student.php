@@ -5,44 +5,11 @@ ini_set('display_errors', "1");
 ini_set('display_startup_errors', "1");
 error_reporting(E_ALL);
 
-class Student
+class Student extends Person
 {
-    private int $id;
-    private string $firstName, $lastName, $email, $address;
+    use Connection;
+
     private ?LearningClass $class = null;
-
-    public function __construct(string $firstName, string $lastName, string $email, string $address)
-    {
-        $this->firstName = ucwords($firstName);
-        $this->lastName = ucwords($lastName);
-        $this->email = strtolower($email);
-        $this->address = ucwords($address);
-    }
-
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    public function getFirstName(): string
-    {
-        return $this->firstName;
-    }
-
-    public function getLastName(): string
-    {
-        return $this->lastName;
-    }
-
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-
-    public function getAddress(): string
-    {
-        return $this->address;
-    }
 
     public function getClass(): ?LearningClass
     {
@@ -55,4 +22,22 @@ class Student
         $this->class = new LearningClass('', '', 1);
     }
 
+    public function save()
+    {
+        $pdo = $this->openConnection();
+        if($this->getClass() !== null) {
+            $handle = $pdo->prepare('INSERT INTO student (firstName, lastName, email, address, class_id) VALUES (:firstName, :lastName, :email, :address, :class_id)');
+        } else {
+            $handle = $pdo->prepare('INSERT INTO student (firstName, lastName, email, address) VALUES (:firstName, :lastName, :email, :address)');
+        }
+        $handle->bindValue('firstName', $this->getFirstName());
+        $handle->bindValue('lastName', $this->getLastName());
+        $handle->bindValue('email', $this->getEmail());
+        $handle->bindValue('address', $this->getAddress());
+        if($this->getClass() !== null) {
+            $handle->bindValue('class_id', $this->getClass()->getId());
+        }
+        $handle->execute();
+        $this->id = (int)$pdo->lastInsertId();
+    }
 }
