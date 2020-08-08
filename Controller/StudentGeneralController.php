@@ -19,6 +19,9 @@ class StudentGeneralController
         catch (StudentLoaderException $e) {
             $errorMessage = $e->getMessage();
         }
+
+        $count = 1;
+
         require 'View/student_general.php';
     }
 }

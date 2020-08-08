@@ -30,10 +30,11 @@ error_reporting(E_ALL);
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">ID</th>
+                <th scope="col">#</th>
                 <th scope="col">First Name</th>
                 <th scope="col">Last Name</th>
                 <th scope="col">Class</th>
+                <th></th>
                 <th></th>
                 <th></th>
             </tr>
@@ -46,16 +47,21 @@ error_reporting(E_ALL);
             foreach ($loader->getStudents() as $student):
             ?>
             <tr>
-                <th scope="row"><?php echo $student->getId(); ?></th>
-                <td><?= $student->getFirstName() ?></td>
-                <td><?= $student->getLastName() ?></td>
-                <td><?php if ($student->getClass() !== null) {
+                <th scope="row" class="align-middle"><?php
+                    echo $count;
+                    $count++;
+                    ?>
+                </th>
+                <td class="align-middle"><?= $student->getFirstName() ?></td>
+                <td class="align-middle"><?= $student->getLastName() ?></td>
+                <td class="align-middle"><?php if ($student->getClass() !== null) {
                         echo "<a href='#'>{$student->getClass()->getName()}</a>";
                     } else {
                         echo "N/A";
                     }
                     ?>
                 </td>
+                <td class="align-middle"><a href="?page=teacher&id=<?php echo $student->getId(); ?>" class="btn btn-success">Details</a></td>
                 <td><a href="#" class="btn btn-warning">Update</a></td>
                 <td><a href="#" class="btn btn-danger">Delete</a></td>
             </tr>

@@ -19,6 +19,8 @@ class ClassGeneralController
             $errorMessage = $e->getMessage();
         }
 
+        $count = 1;
+
         require 'View/class_general.php';
     }
 }

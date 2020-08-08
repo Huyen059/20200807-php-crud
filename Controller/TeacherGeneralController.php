@@ -19,6 +19,8 @@ class TeacherGeneralController
             $errorMessage = $e->getMessage();
         }
 
+        $count = 1;
+
         require 'View/teacher_general.php';
     }
 }

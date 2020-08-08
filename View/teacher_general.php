@@ -29,10 +29,11 @@ error_reporting(E_ALL);
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">ID</th>
+                        <th scope="col">#</th>
                         <th scope="col">First Name</th>
                         <th scope="col">Last Name</th>
                         <th scope="col">Class</th>
+                        <th></th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -45,16 +46,22 @@ error_reporting(E_ALL);
                     foreach ($loader->getTeachers() as $teacher):
                         ?>
                         <tr>
-                            <th scope="row"><?php echo $teacher->getId(); ?></th>
-                            <td><?= $teacher->getFirstName() ?></td>
-                            <td><?= $teacher->getLastName() ?></td>
-                            <td><?php if ($teacher->getClass() !== null) {
+                            <th scope="row" class="align-middle">
+                                <?php
+                                echo $count;
+                                $count++;
+                                ?>
+                            </th>
+                            <td class="align-middle"><?= $teacher->getFirstName() ?></td>
+                            <td class="align-middle"><?= $teacher->getLastName() ?></td>
+                            <td class="align-middle"><?php if ($teacher->getClass() !== null) {
                                     echo "<a href='#'>{$teacher->getClass()->getName()}</a>";
                                 } else {
                                     echo "N/A";
                                 }
                                 ?>
                             </td>
+                            <td class="align-middle"><a href="?page=teacher&id=<?php echo $teacher->getId(); ?>" class="btn btn-success">Details</a></td>
                             <td><a href="#" class="btn btn-warning">Update</a></td>
                             <td><a href="#" class="btn btn-danger">Delete</a></td>
                         </tr>

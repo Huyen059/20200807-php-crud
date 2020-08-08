@@ -29,10 +29,11 @@ error_reporting(E_ALL);
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col">ID</th>
+                    <th scope="col">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Address</th>
                     <th scope="col">Teacher</th>
+                    <th></th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -45,10 +46,14 @@ error_reporting(E_ALL);
                 foreach ($loader->getClasses() as $class):
                     ?>
                     <tr>
-                        <th scope="row"><?php echo $class->getId(); ?></th>
-                        <td><?= $class->getName() ?></td>
-                        <td><?= $class->getAddress() ?></td>
-                        <td><?php if ($class->getTeacher() !== null) {
+                        <th scope="row" class="align-middle"><?php
+                            echo $count;
+                            $count++;
+                            ?>
+                        </th>
+                        <td class="align-middle"><?= $class->getName() ?></td>
+                        <td class="align-middle"><?= $class->getAddress() ?></td>
+                        <td class="align-middle"><?php if ($class->getTeacher() !== null) {
                             $teacherFullName = $class->getTeacher()->getFirstName() . " " . $class->getTeacher()->getLastName();
                                 echo "<a href='#'>{$teacherFullName}</a>";
                             } else {
@@ -56,6 +61,7 @@ error_reporting(E_ALL);
                             }
                             ?>
                         </td>
+                        <td class="align-middle"><a href="?page=class&id=<?php echo $class->getId(); ?>" class="btn btn-success">Details</a></td>
                         <td><a href="#" class="btn btn-warning">Update</a></td>
                         <td><a href="#" class="btn btn-danger">Delete</a></td>
                     </tr>
