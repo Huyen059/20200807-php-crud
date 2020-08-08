@@ -13,8 +13,6 @@ class UpdateStudentController
 {
     public function render()
     {
-
-
         if(isset($_POST['id'])){
             $firstName = htmlspecialchars(trim($_POST['firstName']));
             $lastName = htmlspecialchars(trim($_POST['lastName']));

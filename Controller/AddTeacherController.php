@@ -21,6 +21,8 @@ class AddTeacherController
             $teacher->save();
         }
 
+        $title = "Add a new teacher";
+        $action = 'add';
         require 'View/add_teacher.php';
     }
 }

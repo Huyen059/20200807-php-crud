@@ -21,7 +21,7 @@ class Teacher extends Person
         $this->class = $class;
     }
 
-    public function save()
+    public function insert()
     {
         $pdo = $this->openConnection();
         $handle = $pdo->prepare('INSERT INTO teacher (firstName, lastName, email, address) VALUES (:firstName, :lastName, :email, :address)');
@@ -31,5 +31,27 @@ class Teacher extends Person
         $handle->bindValue('address', $this->getAddress());
         $handle->execute();
         $this->id = (int)$pdo->lastInsertId();
+    }
+
+    public function update()
+    {
+        $pdo = $this->openConnection();
+        $handle = $pdo->prepare('UPDATE teacher SET firstName = :firstName, lastName = :lastName, email = :email, address = :address WHERE id = :id');
+        $handle->bindValue('firstName', $this->getFirstName());
+        $handle->bindValue('lastName', $this->getLastName());
+        $handle->bindValue('email', $this->getEmail());
+        $handle->bindValue('address', $this->getAddress());
+        $handle->bindValue('id', $this->getId());
+        $handle->execute();
+    }
+
+    public function save()
+    {
+        if(empty($this->getId())){
+            $this->insert();
+            return;
+        }
+
+        $this->update();
     }
 }

@@ -65,13 +65,13 @@ error_reporting(E_ALL);
                             <td>
                                 <form method="post" class="d-flex justify-content-center">
                                     <input type="hidden" name="action" value="update">
-                                    <button class="btn btn-warning" name="update" type="submit">Update</button>
+                                    <button class="btn btn-warning" name="update" value="<?= $teacher->getId() ?>" type="submit">Update</button>
                                 </form>
                             </td>
                             <td>
                                 <form method="post" class="d-flex justify-content-center">
                                     <input type="hidden" name="action" value="delete">
-                                    <button class="btn btn-danger" name="delete" type="submit">Delete</button>
+                                    <button class="btn btn-danger" name="delete" value="<?= $teacher->getId() ?>" type="submit">Delete</button>
                                 </form>
                             </td>
                         </tr>
