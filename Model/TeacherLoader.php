@@ -27,8 +27,8 @@ class TeacherLoader
             $newTeacher->setId((int)$teacher['id']);
             $this->teachers[$teacher['id']] = $newTeacher;
             if($teacher['classId']) {
-                $class = new LearningClass($teacher['className'], $teacher['classAddress']);
-                $newTeacher->setClass($class);
+                $newTeacher->setClassName($teacher['className']);
+                $newTeacher->setClassId((int)$teacher['classId']);
             }
         }
     }

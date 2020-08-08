@@ -46,16 +46,16 @@ error_reporting(E_ALL);
                     <td class="align-middle"><?= $teacher->getLastName() ?></td>
                     <td class="align-middle"><?= $teacher->getEmail() ?></td>
                     <td class="align-middle"><?= $teacher->getAddress() ?></td>
-                    <td class="align-middle"><?php if ($teacher->getClass() !== null) {
-                            echo "<a href='#'>{$teacher->getClass()->getName()}</a>";
+                    <td class="align-middle"><?php if ($teacher->getClassId()) {
+                            echo "<a href='?page=class&id={$teacher->getClassId()}'>{$teacher->getClassName()}</a>";
                         } else {
                             echo "N/A";
                         }
                         ?>
                     </td>
-                    <td class="align-middle"><?php if ($teacher->getClass() !== null) {
+                    <td class="align-middle"><?php if ($teacher->getClassId()) {
                         //Todo: get students and put them here in a list
-                            echo "<a href='#'>{$teacher->getClass()->getName()}</a>";
+                            echo "<a href='#'>{$teacher->getClassName()}</a>";
                         } else {
                             echo "N/A";
                         }

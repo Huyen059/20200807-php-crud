@@ -7,16 +7,27 @@ error_reporting(E_ALL);
 
 class Teacher extends Person
 {
-    private ?LearningClass $class = null;
+    private string $className = '';
+    private int $classId = 0;
 
-    public function getClass(): ?LearningClass
+    public function getClassName(): string
     {
-        return $this->class;
+        return $this->className;
     }
 
-    public function setClass(LearningClass $class): void
+    public function getClassId(): int
     {
-        $this->class = $class;
+        return $this->classId;
+    }
+
+    public function setClassName(string $className): void
+    {
+        $this->className = $className;
+    }
+
+    public function setClassId(int $classId): void
+    {
+        $this->classId = $classId;
     }
 
     public function insert(\PDO $pdo): void
