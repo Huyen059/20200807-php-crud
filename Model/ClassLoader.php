@@ -25,6 +25,9 @@ class ClassLoader
         foreach ($classes as $class) {
             $newClass = new LearningClass($class['name'], $class['address']);
             $newClass->setId((int)$class['id']);
+            if($class['teacher_id']) {
+                $newClass->setTeacher(new TeacherLoader($pdo), (int)$class['teacher_id']);
+            }
             $this->classes[$class['id']] = $newClass;
         }
     }

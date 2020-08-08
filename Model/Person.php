@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 
 class Person
 {
-    protected int $id;
+    protected int $id = 0;
     protected string $firstName, $lastName, $email, $address;
 
     public function __construct(string $firstName, string $lastName, string $email, string $address)

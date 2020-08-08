@@ -54,8 +54,8 @@ error_reporting(E_ALL);
                         <td class="align-middle"><?= $class->getName() ?></td>
                         <td class="align-middle"><?= $class->getAddress() ?></td>
                         <td class="align-middle"><?php if ($class->getTeacher() !== null) {
-                            $teacherFullName = $class->getTeacher()->getFirstName() . " " . $class->getTeacher()->getLastName();
-                                echo "<a href='#'>{$teacherFullName}</a>";
+                            $teacherId = $class->getTeacher()->getId();
+                                echo "<a href='?page=teacher&id={$teacherId}'>{$class->getTeacher()->getFullName()}</a>";
                             } else {
                                 echo "N/A";
                             }

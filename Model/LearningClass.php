@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 
 class LearningClass
 {
-    private int $id;
+    private int $id = 0;
     private string $name, $address;
     private ?Teacher $teacher = null;
     /**
@@ -63,10 +63,11 @@ class LearningClass
     }
 
 
-    public function setTeacher(int $teacherId): void
+    public function setTeacher(TeacherLoader $teacherLoader, int $teacherId): void
     {
-        // Todo: link Teacher here
-        $this->teacher = new Teacher('', '', '', '');
+        $teacher = $teacherLoader->getTeachers()[$teacherId];
+        $this->teacher = $teacher;
+        $teacher->setClass($this);
     }
 
     public function insert(\PDO $pdo)

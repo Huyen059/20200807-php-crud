@@ -5,6 +5,7 @@ use Model\ClassLoader;
 use Model\ClassLoaderException;
 use Model\Connection;
 use Model\LearningClass;
+use Model\TeacherLoader;
 
 ini_set('display_errors', "1");
 ini_set('display_startup_errors', "1");
@@ -21,6 +22,7 @@ class ClassGeneralController
         }
         try {
             $loader = new ClassLoader($pdo);
+            $teacherLoader = new TeacherLoader($pdo);
         }
         catch (ClassLoaderException $e) {
             $errorMessage = $e->getMessage();

@@ -16,11 +16,10 @@ class Teacher extends Person
 
     public function setClass(LearningClass $class): void
     {
-        // Todo: link class here
         $this->class = $class;
     }
 
-    public function insert(\PDO $pdo)
+    public function insert(\PDO $pdo): void
     {
         $handle = $pdo->prepare('INSERT INTO teacher (firstName, lastName, email, address) VALUES (:firstName, :lastName, :email, :address)');
         $handle->bindValue('firstName', $this->getFirstName());
