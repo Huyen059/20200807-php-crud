@@ -24,6 +24,8 @@ class AddStudentController
             $student->save();
         }
 
+        $title = "Add a new student";
+        $action = 'add';
         require 'View/add_student.php';
     }
 }

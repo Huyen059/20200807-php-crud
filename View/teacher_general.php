@@ -33,9 +33,9 @@ error_reporting(E_ALL);
                         <th scope="col">First Name</th>
                         <th scope="col">Last Name</th>
                         <th scope="col">Class</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -62,8 +62,18 @@ error_reporting(E_ALL);
                                 ?>
                             </td>
                             <td class="align-middle"><a href="?page=teacher&id=<?php echo $teacher->getId(); ?>" class="btn btn-success">Details</a></td>
-                            <td><a href="#" class="btn btn-warning">Update</a></td>
-                            <td><a href="#" class="btn btn-danger">Delete</a></td>
+                            <td>
+                                <form method="post" class="d-flex justify-content-center">
+                                    <input type="hidden" name="action" value="update">
+                                    <button class="btn btn-warning" name="update" type="submit">Update</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form method="post" class="d-flex justify-content-center">
+                                    <input type="hidden" name="action" value="delete">
+                                    <button class="btn btn-danger" name="delete" type="submit">Delete</button>
+                                </form>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>

@@ -11,6 +11,9 @@ use Controller\StudentDetailController;
 use Controller\StudentGeneralController;
 use Controller\TeacherDetailController;
 use Controller\TeacherGeneralController;
+use Controller\UpdateClassController;
+use Controller\UpdateStudentController;
+use Controller\UpdateTeacherController;
 
 ini_set('display_errors', "1");
 ini_set('display_startup_errors', "1");
@@ -34,7 +37,7 @@ if(isset($_GET['page'])) {
                         $controller = new AddStudentController();
                         break;
                     case 'update':
-                        $controller = 'update';
+                        $controller = new UpdateStudentController();
                         break;
                     case 'delete':
                         $controller = 'delete';
@@ -53,7 +56,7 @@ if(isset($_GET['page'])) {
                         $controller = new AddTeacherController();
                         break;
                     case 'update':
-                        $controller = 'update';
+                        $controller = new UpdateTeacherController();
                         break;
                     case 'delete':
                         $controller = 'delete';
@@ -72,7 +75,7 @@ if(isset($_GET['page'])) {
                         $controller = new AddClassController();
                         break;
                     case 'update':
-                        $controller = 'update';
+                        $controller = new UpdateClassController();
                         break;
                     case 'delete':
                         $controller = 'delete';

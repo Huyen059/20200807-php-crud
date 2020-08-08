@@ -22,7 +22,7 @@ class Student extends Person
         $this->class = new LearningClass('', '', 1);
     }
 
-    public function save()
+    public function insert()
     {
         $pdo = $this->openConnection();
         if($this->getClass() !== null) {
@@ -39,5 +39,34 @@ class Student extends Person
         }
         $handle->execute();
         $this->id = (int)$pdo->lastInsertId();
+    }
+
+    public function update()
+    {
+        $pdo = $this->openConnection();
+        if($this->getClass() !== null) {
+            $handle = $pdo->prepare('UPDATE student SET firstName = :firstName, lastName = :lastName, email = :email, address = :address, class_id = :class_id WHERE id = :id');
+        } else {
+            $handle = $pdo->prepare('UPDATE student SET firstName = :firstName, lastName = :lastName, email = :email, address = :address WHERE id = :id');
+        }
+        $handle->bindValue('firstName', $this->getFirstName());
+        $handle->bindValue('lastName', $this->getLastName());
+        $handle->bindValue('email', $this->getEmail());
+        $handle->bindValue('address', $this->getAddress());
+        $handle->bindValue('id', $this->getId());
+        if($this->getClass() !== null) {
+            $handle->bindValue('class_id', $this->getClass()->getId());
+        }
+        $handle->execute();
+    }
+
+    public function save()
+    {
+        if(empty($this->getId())) {
+            $this->insert();
+            return;
+        }
+
+        $this->update();
     }
 }
