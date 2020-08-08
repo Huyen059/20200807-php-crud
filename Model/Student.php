@@ -7,23 +7,54 @@ error_reporting(E_ALL);
 
 class Student extends Person
 {
-    private ?LearningClass $class = null;
+    private string $className = '';
+    private int $classId = 0;
+    private int $teacherId = 0;
+    private string $teacherFullName = '';
 
-    public function getClass(): ?LearningClass
+    public function getClassName(): string
     {
-        return $this->class;
+        return $this->className;
     }
 
-    public function setClass(\PDO $pdo, int $classId): void
+    public function setClassName(string $className): void
     {
-        $classLoader = new ClassLoader($pdo);
-        $classes = $classLoader->getClasses();
-        $this->class = $classes[$classId];
+        $this->className = $className;
+    }
+
+    public function getClassId(): int
+    {
+        return $this->classId;
+    }
+
+    public function setClassId(int $classId): void
+    {
+        $this->classId = $classId;
+    }
+
+    public function getTeacherId(): int
+    {
+        return $this->teacherId;
+    }
+
+    public function setTeacherId(int $teacherId): void
+    {
+        $this->teacherId = $teacherId;
+    }
+
+    public function getTeacherFullName(): string
+    {
+        return $this->teacherFullName;
+    }
+
+    public function setTeacherFullName(string $teacherFullName): void
+    {
+        $this->teacherFullName = $teacherFullName;
     }
 
     public function insert(\PDO $pdo)
     {
-        if($this->getClass() !== null) {
+        if($this->getClassId()) {
             $handle = $pdo->prepare('INSERT INTO student (firstName, lastName, email, address, class_id) VALUES (:firstName, :lastName, :email, :address, :class_id)');
         } else {
             $handle = $pdo->prepare('INSERT INTO student (firstName, lastName, email, address) VALUES (:firstName, :lastName, :email, :address)');
@@ -32,8 +63,8 @@ class Student extends Person
         $handle->bindValue('lastName', $this->getLastName());
         $handle->bindValue('email', $this->getEmail());
         $handle->bindValue('address', $this->getAddress());
-        if($this->getClass() !== null) {
-            $handle->bindValue('class_id', $this->getClass()->getId());
+        if($this->getClassId()) {
+            $handle->bindValue('class_id', $this->getClassId());
         }
         $handle->execute();
         $this->id = (int)$pdo->lastInsertId();
@@ -41,7 +72,7 @@ class Student extends Person
 
     public function update(\PDO $pdo)
     {
-        if($this->getClass() !== null) {
+        if($this->getClassId()) {
             $handle = $pdo->prepare('UPDATE student SET firstName = :firstName, lastName = :lastName, email = :email, address = :address, class_id = :class_id WHERE id = :id');
         } else {
             $handle = $pdo->prepare('UPDATE student SET firstName = :firstName, lastName = :lastName, email = :email, address = :address WHERE id = :id');
@@ -51,8 +82,8 @@ class Student extends Person
         $handle->bindValue('email', $this->getEmail());
         $handle->bindValue('address', $this->getAddress());
         $handle->bindValue('id', $this->getId());
-        if($this->getClass() !== null) {
-            $handle->bindValue('class_id', $this->getClass()->getId());
+        if($this->getClassId()) {
+            $handle->bindValue('class_id', $this->getClassId());
         }
         $handle->execute();
     }

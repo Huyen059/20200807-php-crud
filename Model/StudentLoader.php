@@ -15,7 +15,12 @@ class StudentLoader
 
     public function __construct(\PDO $pdo)
     {
-        $handle = $pdo->prepare('SELECT * FROM student');
+        $handle = $pdo->prepare('SELECT student.id, student.firstName, student.lastName, student.email, student.address, student.class_id, 
+            class.name as className, class.address as classAddress,
+            teacher.id as teacherId, teacher.firstName as teacherFirstName, teacher.lastName as teacherLastName
+            FROM student 
+            LEFT JOIN class ON student.class_id = class.id
+            LEFT JOIN teacher ON teacher.id = class.teacher_id');
         $handle->execute();
         $students = $handle->fetchAll();
 
@@ -26,8 +31,11 @@ class StudentLoader
         foreach ($students as $student) {
             $newStudent = new Student($student['firstName'], $student['lastName'], $student['email'], $student['address']);
             $newStudent->setId((int)$student['id']);
-            if($student['class_id']) {
-                $newStudent->setClass($pdo, (int)$student['class_id']);
+            if ($student['class_id']) {
+                $newStudent->setClassId((int)$student['class_id']);
+                $newStudent->setTeacherId((int)$student['teacherId']);
+                $newStudent->setClassName($student['className']);
+                $newStudent->setTeacherFullName($student['teacherFirstName'] . " " . $student['teacherLastName']);
             }
             $this->students[$student['id']] = $newStudent;
         }

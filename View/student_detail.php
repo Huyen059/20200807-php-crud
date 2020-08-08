@@ -46,15 +46,15 @@ error_reporting(E_ALL);
                         <td class="align-middle"><?= $student->getLastName() ?></td>
                         <td class="align-middle"><?= $student->getEmail() ?></td>
                         <td class="align-middle"><?= $student->getAddress() ?></td>
-                        <td class="align-middle"><?php if ($student->getClass()) {
-                                echo "<a href='?page=class&id={$student->getClass()->getId()}'>{$student->getClass()->getName()}</a>";
+                        <td class="align-middle"><?php if ($student->getClassId()) {
+                                echo "<a href='?page=class&id={$student->getClassId()}'>{$student->getClassName()}</a>";
                             } else {
                                 echo "N/A";
                             }
                             ?>
                         </td>
-                        <td class="align-middle"><?php if ($student->getClass() !== null && $student->getClass()->getTeacher() !== null) {
-                                echo "<a href='#'>{$student->getClass()->getTeacher()->getFullName()}</a>";
+                        <td class="align-middle"><?php if ($student->getTeacherId()) {
+                                echo "<a href='?page=teacher&id={$student->getTeacherId()}'>{$student->getTeacherFullName()}</a>";
                             } else {
                                 echo "N/A";
                             }

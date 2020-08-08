@@ -34,7 +34,7 @@ class AddStudentController
             $classId = (int)$_POST['classId'];
             $student = new Student($firstName, $lastName, $email, $address);
             if($classId !== 0) {
-                $student->setClass($classId);
+                $student->setClassId($classId);
             }
             $student->save($pdo);
         }

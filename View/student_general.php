@@ -53,8 +53,8 @@ error_reporting(E_ALL);
                 </th>
                 <td class="align-middle"><?= $student->getFirstName() ?></td>
                 <td class="align-middle"><?= $student->getLastName() ?></td>
-                <td class="align-middle"><?php if ($student->getClass() !== null) {
-                        echo "<a href='?page=class&id={$student->getClass()->getId()}'>{$student->getClass()->getName()}</a>";
+                <td class="align-middle"><?php if ($student->getClassId()) {
+                        echo "<a href='?page=class&id={$student->getClassId()}'>{$student->getClassName()}</a>";
                     } else {
                         echo "N/A";
                     }
