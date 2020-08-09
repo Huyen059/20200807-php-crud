@@ -29,6 +29,6 @@ class TeacherGeneralController
 
         $count = 1;
 
-        require 'View/teacher_general.php';
+        require __DIR__ . '/../View/teacher_general.php';
     }
 }

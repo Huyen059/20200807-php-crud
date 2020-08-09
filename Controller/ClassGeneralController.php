@@ -39,6 +39,6 @@ class ClassGeneralController
 
         $count = 1;
 
-        require 'View/class_general.php';
+        require __DIR__ . '/../View/class_general.php';
     }
 }

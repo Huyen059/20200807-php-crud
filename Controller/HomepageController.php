@@ -11,6 +11,6 @@ class HomepageController {
     public function render()
     {
         $pdo = Connection::openConnection();
-        require 'View/homepage.php';
+        require __DIR__ . '/../View/homepage.php';
     }
 }

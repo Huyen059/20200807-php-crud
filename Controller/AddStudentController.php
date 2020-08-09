@@ -42,6 +42,6 @@ class AddStudentController
         $title = "Add a new student";
         $action = 'add';
         $firstOption = (empty($classes)) ? 'No class available' : 'Choose a class';
-        require 'View/add_student.php';
+        require __DIR__ . '/../View/add_student.php';
     }
 }

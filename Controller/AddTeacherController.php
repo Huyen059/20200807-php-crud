@@ -24,6 +24,6 @@ class AddTeacherController
 
         $title = "Add a new teacher";
         $action = 'add';
-        require 'View/add_teacher.php';
+        require __DIR__ . '/../View/add_teacher.php';
     }
 }

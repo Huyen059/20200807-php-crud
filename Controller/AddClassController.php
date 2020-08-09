@@ -40,6 +40,6 @@ class AddClassController
         $title = "Add a new class";
         $action = 'add';
         $firstOption = (empty($teachers)) ? 'No teacher available' : 'Choose a teacher';
-        require 'View/add_class.php';
+        require __DIR__ . '/../View/add_class.php';
     }
 }

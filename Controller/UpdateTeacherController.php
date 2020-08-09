@@ -43,6 +43,6 @@ class UpdateTeacherController
 
         $title = "Update data";
         $action = 'update';
-        require 'View/add_teacher.php';
+        require __DIR__ . '/../View/add_teacher.php';
     }
 }

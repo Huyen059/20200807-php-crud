@@ -28,6 +28,6 @@ class ClassDetailController
             $errorMessage = $e->getMessage();
         }
 
-        require 'View/class_detail.php';
+        require __DIR__ . '/../View/class_detail.php';
     }
 }

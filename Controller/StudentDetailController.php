@@ -22,6 +22,6 @@ class StudentDetailController
             $errorMessage = $e->getMessage();
         }
 
-        require 'View/student_detail.php';
+        require __DIR__ . '/../View/student_detail.php';
     }
 }

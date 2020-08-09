@@ -30,6 +30,6 @@ class StudentGeneralController
 
 
         $count = 1;
-        require 'View/student_general.php';
+        require __DIR__ . '/../View/student_general.php';
     }
 }

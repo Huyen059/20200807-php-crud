@@ -22,6 +22,6 @@ class TeacherDetailController
             $errorMessage = $e->getMessage();
         }
 
-        require 'View/teacher_detail.php';
+        require __DIR__ . '/../View/teacher_detail.php';
     }
 }

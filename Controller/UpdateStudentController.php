@@ -54,7 +54,7 @@ class UpdateStudentController
             $student = new Student($firstName, $lastName, $email, $address);
             $student->setId((int)$_POST['id']);
             if($classId !== 0) {
-                $student->setClass($pdo, $classId);
+                $student->setClassId($classId);
             }
             $student->save($pdo);
         }
@@ -62,6 +62,6 @@ class UpdateStudentController
         $title = "Update data";
         $action = 'update';
         $firstOption = (empty($classes)) ? 'No class available' : 'Choose a class';
-        require 'View/add_student.php';
+        require __DIR__ . '/../View/add_student.php';
     }
 }
