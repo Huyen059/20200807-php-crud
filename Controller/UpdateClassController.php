@@ -48,7 +48,7 @@ class UpdateClassController
             $teacherId = (int)$_POST['teacherId'];
             $class = new LearningClass($className, $address);
             $class->setId((int)$_POST['id']);
-            $class->setTeacher($pdo, $teacherId);
+            $class->setTeacherId($teacherId);
             $class->save($pdo);
         }
 

@@ -9,7 +9,8 @@ class LearningClass
 {
     private int $id = 0;
     private string $name, $address;
-    private ?Teacher $teacher = null;
+    private string $teacherFullName = '';
+    private int $teacherId = 0;
     private array $students = [];
 
     public function __construct(string $name, string $address)
@@ -38,9 +39,24 @@ class LearningClass
         return $this->address;
     }
 
-    public function getTeacher(): ?Teacher
+    public function getTeacherFullName(): string
     {
-        return $this->teacher;
+        return $this->teacherFullName;
+    }
+
+    public function setTeacherFullName(string $teacherFullName): void
+    {
+        $this->teacherFullName = $teacherFullName;
+    }
+
+    public function getTeacherId(): int
+    {
+        return $this->teacherId;
+    }
+
+    public function setTeacherId(int $teacherId): void
+    {
+        $this->teacherId = $teacherId;
     }
 
     public function getStudents(): array
@@ -59,23 +75,10 @@ class LearningClass
         $handle->execute();
         $students = $handle->fetchAll();
         foreach ($students as $student) {
-            $this->students[$student['studentId']] = $student['studentFirstName'] . " " . $student['studentLastName'];
+            if ($student['studentId']) {
+                $this->students[$student['studentId']] = $student['studentFirstName'] . " " . $student['studentLastName'];
+            }
         }
-    }
-
-
-    public function setTeacher(\PDO $pdo, int $teacherId): void
-    {
-        if($teacherId === 0) {
-            $this->teacher = null;
-            $handle = $pdo->prepare('UPDATE class SET teacher_id = null WHERE id = :id');
-            $handle->bindValue('id', $this->getId());
-            $handle->execute();
-            return;
-        }
-
-        $teacherLoader = new TeacherLoader($pdo);
-        $this->teacher = $teacherLoader->getTeachers()[$teacherId];
     }
 
     public function insert(\PDO $pdo)
@@ -83,7 +86,7 @@ class LearningClass
         $handle = $pdo->prepare('INSERT INTO class (name, address, teacher_id) VALUES (:name, :address, :teacher)');
         $handle->bindValue('name', $this->getName());
         $handle->bindValue('address', $this->getAddress());
-        $teacherId = $this->getTeacher() ? $this->getTeacher()->getId() : null;
+        $teacherId = $this->getTeacherId() ?: null;
         $handle->bindValue('teacher', $teacherId);
         $handle->execute();
         $this->id = (int)$pdo->lastInsertId();
@@ -95,7 +98,7 @@ class LearningClass
         $handle->bindValue('name', $this->getName());
         $handle->bindValue('address', $this->getAddress());
         $handle->bindValue('id', $this->getId());
-        $teacherId = $this->getTeacher() ? $this->getTeacher()->getId() : null;
+        $teacherId = $this->getTeacherId() ?: null;
         $handle->bindValue('teacher', $teacherId);
         $handle->execute();
     }

@@ -14,7 +14,8 @@ class ClassLoader
 
     public function __construct(\PDO $pdo)
     {
-        $handle = $pdo->prepare('SELECT * FROM class');
+        $handle = $pdo->prepare('SELECT class.id, class.name, class.address, class.teacher_id, teacher.firstName, teacher.lastName FROM class 
+            LEFT JOIN teacher ON teacher.id = class.teacher_id');
         $handle->execute();
         $classes = $handle->fetchAll();
 
@@ -26,9 +27,11 @@ class ClassLoader
             $newClass = new LearningClass($class['name'], $class['address']);
             $newClass->setId((int)$class['id']);
             $newClass->setStudents($pdo);
+            $newClass->setTeacherId((int)$class['teacher_id']);
             if($class['teacher_id']) {
-                $newClass->setTeacher($pdo, (int)$class['teacher_id']);
+                $newClass->setTeacherFullName($class['firstName'] . " " . $class['lastName']);
             }
+            $newClass->setTeacherId((int)$class['teacher_id']);
             $this->classes[$class['id']] = $newClass;
         }
     }

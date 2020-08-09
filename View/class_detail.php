@@ -42,8 +42,8 @@ error_reporting(E_ALL);
                     <th scope="row" class="align-middle"><?= $class->getId() ?></th>
                     <td class="align-middle"><?= $class->getName() ?></td>
                     <td class="align-middle"><?= $class->getAddress() ?></td>
-                    <td class="align-middle"><?php if($class->getTeacher() !== null){
-                            echo "<a href='?page=teacher&id={$class->getTeacher()->getId()}'>{$class->getTeacher()->getFullName()}</a>";
+                    <td class="align-middle"><?php if($class->getTeacherId()){
+                            echo "<a href='?page=teacher&id={$class->getTeacherId()}'>{$class->getTeacherFullName()}</a>";
                         } else {
                             echo "N/A";
                         }
