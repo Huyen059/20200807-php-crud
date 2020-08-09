@@ -15,18 +15,18 @@ class AddStudentController
     public function render()
     {
         $pdo = Connection::openConnection();
-
-        // Get all classes to display in dropdown
-        try {
-            $classLoader = new ClassLoader($pdo);
-            $classes = $classLoader->getClasses();
-        }
-        catch (ClassLoaderException $e) {
-            $classes = [];
-            $errorMessage = $e->getMessage();
-        }
-        // When the form is submitted
-        if(isset($_POST['id'])){
+        if(!isset($_POST['id'])){
+            // Get all classes to display in dropdown
+            try {
+                $classLoader = new ClassLoader($pdo);
+                $classes = $classLoader->getClasses();
+            }
+            catch (ClassLoaderException $e) {
+                $classes = [];
+                $errorMessage = $e->getMessage();
+            }
+        } else {
+            // When the form is submitted
             $firstName = htmlspecialchars(trim($_POST['firstName']));
             $lastName = htmlspecialchars(trim($_POST['lastName']));
             $email = htmlspecialchars(trim($_POST['email']));
