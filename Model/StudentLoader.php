@@ -15,6 +15,9 @@ class StudentLoader
 
     public function __construct(\PDO $pdo)
     {
+        if(!empty($this->students)){
+            return;
+        }
         $handle = $pdo->prepare('SELECT student.id, student.firstName, student.lastName, student.email, student.address, student.class_id, 
             class.name as className, class.address as classAddress,
             teacher.id as teacherId, teacher.firstName as teacherFirstName, teacher.lastName as teacherLastName

@@ -14,7 +14,12 @@ class TeacherLoader
 
     public function __construct(\PDO $pdo)
     {
-        $handle = $pdo->prepare('SELECT teacher.id, firstName, lastName, email, teacher.address, class.id as classId, class.name as className, class.address as classAddress FROM teacher LEFT JOIN class ON teacher.id = class.teacher_id');
+        if(!empty($this->teachers)){
+            return;
+        }
+        $handle = $pdo->prepare('SELECT teacher.id, firstName, lastName, email, teacher.address, 
+            class.id as classId, class.name as className, class.address as classAddress 
+            FROM teacher LEFT JOIN class ON teacher.id = class.teacher_id');
         $handle->execute();
         $teachers = $handle->fetchAll();
 

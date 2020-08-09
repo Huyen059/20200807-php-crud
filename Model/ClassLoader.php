@@ -14,6 +14,9 @@ class ClassLoader
 
     public function __construct(\PDO $pdo)
     {
+        if(!empty($this->classes)){
+            return;
+        }
         $handle = $pdo->prepare('SELECT class.id, class.name, class.address, class.teacher_id, teacher.firstName, teacher.lastName FROM class 
             LEFT JOIN teacher ON teacher.id = class.teacher_id');
         $handle->execute();
