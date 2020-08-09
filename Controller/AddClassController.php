@@ -15,18 +15,18 @@ class AddClassController
     public function render()
     {
         $pdo = Connection::openConnection();
-        // Get the list of all teachers, so that they can be displayed in the dropdown of the form
-        try {
-            $teacherLoader = new TeacherLoader($pdo);
-            $teachers = $teacherLoader->getTeachers();
-        }
-        catch (TeacherLoaderException $e) {
-            $teachers = [];
-            $errorMessage = $e->getMessage();
-        }
-
-        // When the form is submitted
-        if(isset($_POST['id'])){
+        if(!isset($_POST['id'])) {
+            // Get the list of all teachers, so that they can be displayed in the dropdown of the form
+            try {
+                $teacherLoader = new TeacherLoader($pdo);
+                $teachers = $teacherLoader->getTeachers();
+            }
+            catch (TeacherLoaderException $e) {
+                $teachers = [];
+                $errorMessage = $e->getMessage();
+            }
+        } else {
+            // When the form is submitted
             $className = htmlspecialchars(trim($_POST['className']));
             $address = htmlspecialchars(trim($_POST['address']));
             $teacherId = (int)$_POST['teacherId'];
