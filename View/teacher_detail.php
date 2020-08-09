@@ -41,21 +41,24 @@ error_reporting(E_ALL);
                 <tbody>
                 <tr>
                     <?php /** @var Teacher $teacher */?>
-                    <th scope="row" class="align-middle"><?= $teacher->getId() ?></th>
-                    <td class="align-middle"><?= $teacher->getFirstName() ?></td>
-                    <td class="align-middle"><?= $teacher->getLastName() ?></td>
-                    <td class="align-middle"><?= $teacher->getEmail() ?></td>
-                    <td class="align-middle"><?= $teacher->getAddress() ?></td>
-                    <td class="align-middle"><?php if ($teacher->getClassId()) {
+                    <th scope="row"><?= $teacher->getId() ?></th>
+                    <td><?= $teacher->getFirstName() ?></td>
+                    <td><?= $teacher->getLastName() ?></td>
+                    <td><?= $teacher->getEmail() ?></td>
+                    <td><?= $teacher->getAddress() ?></td>
+                    <td><?php if ($teacher->getClassId()) {
                             echo "<a href='?page=class&id={$teacher->getClassId()}'>{$teacher->getClassName()}</a>";
                         } else {
                             echo "N/A";
                         }
                         ?>
                     </td>
-                    <td class="align-middle"><?php if ($teacher->getClassId()) {
-                        //Todo: get students and put them here in a list
-                            echo "<a href='#'>{$teacher->getClassName()}</a>";
+                    <td><?php if ($students) {
+                            echo "<ol>";
+                            foreach ($students as $studentId => $studentFullName) {
+                                echo "<li class='align-middle'><a href='?page=student&id={$studentId}'>{$studentFullName}</a></li>";
+                            }
+                            echo "</ol>";
                         } else {
                             echo "N/A";
                         }

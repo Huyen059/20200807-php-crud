@@ -39,17 +39,17 @@ error_reporting(E_ALL);
                 <tbody>
                 <tr>
                     <?php /** @var LearningClass $class */?>
-                    <th scope="row" class="align-middle"><?= $class->getId() ?></th>
-                    <td class="align-middle"><?= $class->getName() ?></td>
-                    <td class="align-middle"><?= $class->getAddress() ?></td>
-                    <td class="align-middle"><?php if($class->getTeacherId()){
+                    <th scope="row"><?= $class->getId() ?></th>
+                    <td><?= $class->getName() ?></td>
+                    <td><?= $class->getAddress() ?></td>
+                    <td><?php if($class->getTeacherId()){
                             echo "<a href='?page=teacher&id={$class->getTeacherId()}'>{$class->getTeacherFullName()}</a>";
                         } else {
                             echo "N/A";
                         }
                         ?>
                     </td>
-                    <td class="align-middle"><?php if ($class->getStudents()) {
+                    <td><?php if ($class->getStudents()) {
                         echo "<ul>";
                         foreach ($class->getStudents() as $studentId => $studentFullName) {
                             echo "<li><a href='?page=student&id={$studentId}'>{$studentFullName}</a></li>";
