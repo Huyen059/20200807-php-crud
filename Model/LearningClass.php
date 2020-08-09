@@ -80,33 +80,23 @@ class LearningClass
 
     public function insert(\PDO $pdo)
     {
-        if($this->getTeacher() !== null) {
-            $handle = $pdo->prepare('INSERT INTO class (name, address, teacher_id) VALUES (:name, :address, :teacher)');
-        } else {
-            $handle = $pdo->prepare('INSERT INTO class (name, address) VALUES (:name, :address)');
-        }
+        $handle = $pdo->prepare('INSERT INTO class (name, address, teacher_id) VALUES (:name, :address, :teacher)');
         $handle->bindValue('name', $this->getName());
         $handle->bindValue('address', $this->getAddress());
-        if($this->getTeacher() !== null) {
-            $handle->bindValue('teacher', $this->getTeacher()->getId());
-        }
+        $teacherId = $this->getTeacher() ? $this->getTeacher()->getId() : null;
+        $handle->bindValue('teacher', $teacherId);
         $handle->execute();
         $this->id = (int)$pdo->lastInsertId();
     }
 
     public function update(\PDO $pdo)
     {
-        if($this->getTeacher() !== null) {
-            $handle = $pdo->prepare('UPDATE class SET name = :name, address = :address, teacher_id = :teacher WHERE id = :id');
-        } else {
-            $handle = $pdo->prepare('UPDATE class SET name = :name, address = :address WHERE id = :id');
-        }
+        $handle = $pdo->prepare('UPDATE class SET name = :name, address = :address, teacher_id = :teacher WHERE id = :id');
         $handle->bindValue('name', $this->getName());
         $handle->bindValue('address', $this->getAddress());
         $handle->bindValue('id', $this->getId());
-        if($this->getTeacher() !== null) {
-            $handle->bindValue('teacher', $this->getTeacher()->getId());
-        }
+        $teacherId = $this->getTeacher() ? $this->getTeacher()->getId() : null;
+        $handle->bindValue('teacher', $teacherId);
         $handle->execute();
     }
 

@@ -29,6 +29,10 @@ class Student extends Person
 
     public function setClassId(int $classId): void
     {
+        if(!$classId) {
+            $this->classId = 0;
+            return;
+        }
         $this->classId = $classId;
     }
 
@@ -54,37 +58,27 @@ class Student extends Person
 
     public function insert(\PDO $pdo)
     {
-        if($this->getClassId()) {
-            $handle = $pdo->prepare('INSERT INTO student (firstName, lastName, email, address, class_id) VALUES (:firstName, :lastName, :email, :address, :class_id)');
-        } else {
-            $handle = $pdo->prepare('INSERT INTO student (firstName, lastName, email, address) VALUES (:firstName, :lastName, :email, :address)');
-        }
+        $handle = $pdo->prepare('INSERT INTO student (firstName, lastName, email, address, class_id) VALUES (:firstName, :lastName, :email, :address, :class_id)');
         $handle->bindValue('firstName', $this->getFirstName());
         $handle->bindValue('lastName', $this->getLastName());
         $handle->bindValue('email', $this->getEmail());
         $handle->bindValue('address', $this->getAddress());
-        if($this->getClassId()) {
-            $handle->bindValue('class_id', $this->getClassId());
-        }
+        $classId = $this->getClassId() ?: null;
+        $handle->bindValue('class_id', $classId);
         $handle->execute();
         $this->id = (int)$pdo->lastInsertId();
     }
 
     public function update(\PDO $pdo)
     {
-        if($this->getClassId()) {
-            $handle = $pdo->prepare('UPDATE student SET firstName = :firstName, lastName = :lastName, email = :email, address = :address, class_id = :class_id WHERE id = :id');
-        } else {
-            $handle = $pdo->prepare('UPDATE student SET firstName = :firstName, lastName = :lastName, email = :email, address = :address WHERE id = :id');
-        }
+        $handle = $pdo->prepare('UPDATE student SET firstName = :firstName, lastName = :lastName, email = :email, address = :address, class_id = :class_id WHERE id = :id');
         $handle->bindValue('firstName', $this->getFirstName());
         $handle->bindValue('lastName', $this->getLastName());
         $handle->bindValue('email', $this->getEmail());
         $handle->bindValue('address', $this->getAddress());
         $handle->bindValue('id', $this->getId());
-        if($this->getClassId()) {
-            $handle->bindValue('class_id', $this->getClassId());
-        }
+        $classId = ($this->classId) ?: null;
+        $handle->bindValue('class_id', $classId);
         $handle->execute();
     }
 

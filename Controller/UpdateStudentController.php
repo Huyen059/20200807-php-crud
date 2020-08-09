@@ -17,19 +17,14 @@ class UpdateStudentController
     public function render()
     {
         $pdo = Connection::openConnection();
-        // Get all classes to display in dropdown
-        try {
-            $classLoader = new ClassLoader($pdo);
-            $classes = $classLoader->getClasses();
-        }
-        catch (ClassLoaderException $e) {
-            $classes = [];
-            $errorMessage = $e->getMessage();
-        }
 
         // When the form is not submitted
         if(!isset($_POST['id'])){
             try {
+                // Get all classes to display in dropdown
+                $classLoader = new ClassLoader($pdo);
+                $classes = $classLoader->getClasses();
+                // Get all students
                 $loader = new StudentLoader($pdo);
                 $students = $loader->getStudents();
                 $studentId = (int)$_POST['update'];
@@ -44,6 +39,10 @@ class UpdateStudentController
             {
                 $errorMessage = $e->getMessage();
             }
+            catch (ClassLoaderException $e) {
+                $classes = [];
+                $errorMessage = $e->getMessage();
+            }
         } else {
             // When the form is submitted, we don't display it anymore
             $firstName = htmlspecialchars(trim($_POST['firstName']));
@@ -53,9 +52,7 @@ class UpdateStudentController
             $classId = (int)$_POST['classId'];
             $student = new Student($firstName, $lastName, $email, $address);
             $student->setId((int)$_POST['id']);
-            if($classId !== 0) {
-                $student->setClassId($classId);
-            }
+            $student->setClassId($classId);
             $student->save($pdo);
         }
 

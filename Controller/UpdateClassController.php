@@ -20,15 +20,11 @@ class UpdateClassController
 
         // When the form is not submitted, we need to displayed the info currently stored in database
         if(!isset($_POST['id'])){
-            // Get the list of all teachers, so that they can be displayed in the dropdown of the form
             try {
+                // Get the list of all teachers, so that they can be displayed in the dropdown of the form
                 $teacherLoader = new TeacherLoader($pdo);
                 $teachers = $teacherLoader->getTeachers();
-            } catch (TeacherLoaderException $e) {
-                $teachers = [];
-                $errorMessage = $e->getMessage();
-            }
-            try {
+                // Load the class
                 $loader = new ClassLoader($pdo);
                 $classes = $loader->getClasses();
                 $classId = (int)$_POST['update'];
@@ -39,6 +35,10 @@ class UpdateClassController
             }
             catch (ClassLoaderException $e)
             {
+                $errorMessage = $e->getMessage();
+            }
+            catch (TeacherLoaderException $e) {
+                $teachers = [];
                 $errorMessage = $e->getMessage();
             }
         } else {
