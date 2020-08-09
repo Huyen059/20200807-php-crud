@@ -2,6 +2,8 @@
 declare(strict_types=1);
 namespace Controller;
 use Model\Connection;
+use Model\LearningClass;
+use Model\Student;
 use Model\StudentLoader;
 use Model\StudentLoaderException;
 
@@ -14,12 +16,18 @@ class StudentDetailController
     public function render()
     {
         $pdo = Connection::openConnection();
-        try {
-            $loader = new StudentLoader($pdo);
-            $student = $loader->getStudents()[(int)$_GET['id']];
-        }
-        catch (StudentLoaderException $e) {
-            $errorMessage = $e->getMessage();
+        // If the delete button is clicked, remove the row in database before re-fetching the classes
+        if(isset($_POST['delete'])){
+            $id = (int)$_POST['delete'];
+            Student::delete($pdo, $id);
+        } else {
+            try {
+                $loader = new StudentLoader($pdo);
+                $student = $loader->getStudents()[(int)$_GET['id']];
+            }
+            catch (StudentLoaderException $e) {
+                $errorMessage = $e->getMessage();
+            }
         }
 
         require __DIR__ . '/../View/student_detail.php';

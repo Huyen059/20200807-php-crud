@@ -12,11 +12,16 @@ error_reporting(E_ALL);
 
 <section class="container">
     <h1 class="text-center mb-5">Student Details</h1>
-
+    <?php /** @var Student $student */?>
+    <?php if(!isset($student)):?>
+        <div class="alert alert-success my-4 text-center" role="alert">
+            The data is deleted!
+        </div>
+    <?php else: ?>
     <div class="mb-5">
         <form method="post" class="d-flex justify-content-center">
             <input type="hidden" name="action" value="delete">
-            <button class="btn btn-danger" name="delete" type="submit">Delete</button>
+            <button class="btn btn-danger" name="delete" value="<?= $student->getId() ?>" type="submit">Delete</button>
         </form>
     </div>
 
@@ -40,7 +45,6 @@ error_reporting(E_ALL);
                 </thead>
                 <tbody>
                     <tr>
-                        <?php /** @var Student $student */?>
                         <th scope="row" class="align-middle"><?= $student->getId() ?></th>
                         <td class="align-middle"><?= $student->getFirstName() ?></td>
                         <td class="align-middle"><?= $student->getLastName() ?></td>
@@ -65,6 +69,7 @@ error_reporting(E_ALL);
                 </tbody>
             </table>
         </div>
+    <?php endif; ?>
     <?php endif; ?>
 
     <div class="d-flex justify-content-center">
