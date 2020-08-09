@@ -11,12 +11,19 @@ error_reporting(E_ALL);
 <?php require 'includes/header.php'; ?>
 
 <section class="container">
+    <?php /** @var LearningClass $class */?>
+
     <h1 class="text-center mb-5">Class Details</h1>
 
+    <?php if(!isset($class)):?>
+    <div class="alert alert-success my-4 text-center" role="alert">
+        The data is deleted!
+    </div>
+    <?php else: ?>
     <div class="mb-5">
         <form method="post" class="d-flex justify-content-center">
             <input type="hidden" name="action" value="delete">
-            <button class="btn btn-danger" name="delete" type="submit">Delete</button>
+            <button class="btn btn-danger" name="delete" value="<?= $class->getId() ?>" type="submit">Delete</button>
         </form>
     </div>
 
@@ -38,7 +45,6 @@ error_reporting(E_ALL);
                 </thead>
                 <tbody>
                 <tr>
-                    <?php /** @var LearningClass $class */?>
                     <th scope="row"><?= $class->getId() ?></th>
                     <td><?= $class->getName() ?></td>
                     <td><?= $class->getAddress() ?></td>
@@ -64,6 +70,7 @@ error_reporting(E_ALL);
                 </tbody>
             </table>
         </div>
+    <?php endif; ?>
     <?php endif; ?>
 
     <div class="d-flex justify-content-center">

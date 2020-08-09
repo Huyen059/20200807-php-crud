@@ -4,6 +4,7 @@ namespace Controller;
 use Model\ClassLoader;
 use Model\ClassLoaderException;
 use Model\Connection;
+use Model\LearningClass;
 use Model\TeacherLoader;
 use Model\TeacherLoaderException;
 
@@ -16,17 +17,24 @@ class ClassDetailController
     public function render()
     {
         $pdo = Connection::openConnection();
-        try {
-            $teacherLoader = new TeacherLoader($pdo);
-            $loader = new ClassLoader($pdo);
-            $class = $loader->getClasses()[(int)$_GET['id']];
+        // If the delete button is clicked, remove the row in database before re-fetching the classes
+        if(isset($_POST['delete'])){
+            $id = (int)$_POST['delete'];
+            LearningClass::delete($pdo, $id);
+        } else {
+            try {
+                $teacherLoader = new TeacherLoader($pdo);
+                $loader = new ClassLoader($pdo);
+                $class = $loader->getClasses()[(int)$_GET['id']];
+            }
+            catch (ClassLoaderException $e) {
+                $errorMessage = $e->getMessage();
+            }
+            catch (TeacherLoaderException $e) {
+                $errorMessage = $e->getMessage();
+            }
         }
-        catch (ClassLoaderException $e) {
-            $errorMessage = $e->getMessage();
-        }
-        catch (TeacherLoaderException $e) {
-            $errorMessage = $e->getMessage();
-        }
+
 
         require __DIR__ . '/../View/class_detail.php';
     }
