@@ -25,17 +25,17 @@ class ClassGeneralController
         // Get the teacherLoader because constructor of ClassLoader needs it
         // Todo: need to separate them somehow
         try {
-            $teacherLoader = new TeacherLoader($pdo);
-            $teachers = $teacherLoader->getTeachers();
+//            $teacherLoader = new TeacherLoader($pdo);
+//            $teachers = $teacherLoader->getTeachers();
             $loader = new ClassLoader($pdo);
         }
         catch (ClassLoaderException $e) {
             $errorMessage = $e->getMessage();
         }
-        catch (TeacherLoaderException $e) {
-            $teachers = [];
-            $errorMessage = $e->getMessage();
-        }
+//        catch (TeacherLoaderException $e) {
+//            $teachers = [];
+//            $errorMessage = $e->getMessage();
+//        }
 
         $count = 1;
 

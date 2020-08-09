@@ -66,6 +66,14 @@ class LearningClass
 
     public function setTeacher(\PDO $pdo, int $teacherId): void
     {
+        if($teacherId === 0) {
+            $this->teacher = null;
+            $handle = $pdo->prepare('UPDATE class SET teacher_id = null WHERE id = :id');
+            $handle->bindValue('id', $this->getId());
+            $handle->execute();
+            return;
+        }
+
         $teacherLoader = new TeacherLoader($pdo);
         $this->teacher = $teacherLoader->getTeachers()[$teacherId];
     }

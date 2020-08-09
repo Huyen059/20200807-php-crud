@@ -17,17 +17,17 @@ class UpdateClassController
     public function render()
     {
         $pdo = Connection::openConnection();
-        // Get the list of all teachers, so that they can be displayed in the dropdown of the form
-        try {
-            $teacherLoader = new TeacherLoader($pdo);
-            $teachers = $teacherLoader->getTeachers();
-        } catch (TeacherLoaderException $e) {
-            $teachers = [];
-            $errorMessage = $e->getMessage();
-        }
 
         // When the form is not submitted, we need to displayed the info currently stored in database
         if(!isset($_POST['id'])){
+            // Get the list of all teachers, so that they can be displayed in the dropdown of the form
+            try {
+                $teacherLoader = new TeacherLoader($pdo);
+                $teachers = $teacherLoader->getTeachers();
+            } catch (TeacherLoaderException $e) {
+                $teachers = [];
+                $errorMessage = $e->getMessage();
+            }
             try {
                 $loader = new ClassLoader($pdo);
                 $classes = $loader->getClasses();
@@ -47,10 +47,8 @@ class UpdateClassController
             $address = htmlspecialchars(trim($_POST['address']));
             $teacherId = (int)$_POST['teacherId'];
             $class = new LearningClass($className, $address);
-            if($teacherId !== 0) {
-                $class->setTeacher($pdo, $teacherId);
-            }
             $class->setId((int)$_POST['id']);
+            $class->setTeacher($pdo, $teacherId);
             $class->save($pdo);
         }
 
