@@ -17,7 +17,7 @@ class ClassDetailController
     public function render()
     {
         $pdo = Connection::openConnection();
-        // If the delete button is clicked, remove the row in database before re-fetching the classes
+        // If the delete button is clicked, remove the row in database, nothing is displayed anymore
         if(isset($_POST['delete'])){
             $id = (int)$_POST['delete'];
             LearningClass::delete($pdo, $id);
@@ -34,7 +34,6 @@ class ClassDetailController
                 $errorMessage = $e->getMessage();
             }
         }
-
 
         require __DIR__ . '/../View/class_detail.php';
     }

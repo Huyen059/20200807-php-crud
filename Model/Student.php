@@ -89,7 +89,6 @@ class Student extends Person
         $handle->execute();
     }
 
-
     public function save(\PDO $pdo)
     {
         if(empty($this->getId())) {

@@ -30,11 +30,11 @@ class TeacherLoader
         foreach ($teachers as $teacher) {
             $newTeacher = new Teacher($teacher['firstName'], $teacher['lastName'], $teacher['email'], $teacher['address']);
             $newTeacher->setId((int)$teacher['id']);
-            $this->teachers[$teacher['id']] = $newTeacher;
             if($teacher['classId']) {
                 $newTeacher->setClassName($teacher['className']);
                 $newTeacher->setClassId((int)$teacher['classId']);
             }
+            $this->teachers[$teacher['id']] = $newTeacher;
         }
     }
 

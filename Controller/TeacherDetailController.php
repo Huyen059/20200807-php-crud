@@ -4,7 +4,6 @@ namespace Controller;
 use Model\ClassLoader;
 use Model\ClassLoaderException;
 use Model\Connection;
-use Model\LearningClass;
 use Model\Teacher;
 use Model\TeacherLoader;
 use Model\TeacherLoaderException;
@@ -18,7 +17,7 @@ class TeacherDetailController
     public function render()
     {
         $pdo = Connection::openConnection();
-        // If the delete button is clicked, remove the row in database before re-fetching the classes
+        // If the delete button is clicked, remove the row in database, nothing is displayed anymore
         if(isset($_POST['delete'])){
             $id = (int)$_POST['delete'];
             Teacher::delete($pdo, $id);

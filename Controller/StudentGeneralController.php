@@ -27,8 +27,6 @@ class StudentGeneralController
             $errorMessage = $e->getMessage();
         }
 
-
-
         $count = 1;
         require __DIR__ . '/../View/student_general.php';
     }

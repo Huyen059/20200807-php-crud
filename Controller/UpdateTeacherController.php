@@ -15,15 +15,8 @@ class UpdateTeacherController
     public function render()
     {
         $pdo = Connection::openConnection();
-        if(isset($_POST['id'])){
-            $firstName = htmlspecialchars(trim($_POST['firstName']));
-            $lastName = htmlspecialchars(trim($_POST['lastName']));
-            $email = htmlspecialchars(trim($_POST['email']));
-            $address = htmlspecialchars(trim($_POST['address']));
-            $teacher = new Teacher($firstName, $lastName, $email, $address);
-            $teacher->setId((int)$_POST['id']);
-            $teacher->save($pdo);
-        } else {
+        if(!isset($_POST['id'])){
+            // When the form is not submitted
             try {
                 $loader = new TeacherLoader($pdo);
                 $teachers = $loader->getTeachers();
@@ -39,6 +32,15 @@ class UpdateTeacherController
             {
                 $errorMessage = $e->getMessage();
             }
+        } else {
+            // When the form is submitted
+            $firstName = htmlspecialchars(trim($_POST['firstName']));
+            $lastName = htmlspecialchars(trim($_POST['lastName']));
+            $email = htmlspecialchars(trim($_POST['email']));
+            $address = htmlspecialchars(trim($_POST['address']));
+            $teacher = new Teacher($firstName, $lastName, $email, $address);
+            $teacher->setId((int)$_POST['id']);
+            $teacher->save($pdo);
         }
 
         $title = "Update data";

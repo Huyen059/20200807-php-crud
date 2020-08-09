@@ -16,7 +16,7 @@ class StudentDetailController
     public function render()
     {
         $pdo = Connection::openConnection();
-        // If the delete button is clicked, remove the row in database before re-fetching the classes
+        // If the delete button is clicked, remove the row in database, nothing is displayed anymore
         if(isset($_POST['delete'])){
             $id = (int)$_POST['delete'];
             Student::delete($pdo, $id);
